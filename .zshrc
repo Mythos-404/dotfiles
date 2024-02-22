@@ -277,4 +277,4 @@ alias lzg='lazygit'
 alias pn='pnpm'
 alias ps='procs'
 
-alias mpd_update='( cd ~/Music && mpc clear && mpc ls | mpc add && mpc update mpc listall )'
+alias mpd_update='(cd ~/Music && mpc clear && mpc ls | mpc add && mpc update mpc listall)'
