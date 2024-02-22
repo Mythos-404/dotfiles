@@ -1,0 +1,17 @@
+[manager]
+sort_by = "natural"
+sort_sensitive = true
+sort_reverse = false
+sort_dir_first = true
+
+[opener]
+text = [{ exec = 'nvim "%*"', block = true }]
+
+[preview]
+image_filter="lanczos3"
+max_width = 2048000000
+max_height = 2048000000
+
+[tasks]
+image_alloc = 0
+image_bound = [ 0, 0 ]

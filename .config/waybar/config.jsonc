@@ -1,0 +1,33 @@
+{
+    "include": "~/.config/waybar/modules.jsonc",
+    "layer": "top",
+    "exclusive": true,
+    "passthrough": false,
+    "position": "top",
+    "spacing": 3,
+    "fixed-center": true,
+    "ipc": true,
+    "margin-top": 3,
+    "margin-left": 8,
+    "margin-right": 8,
+
+    "modules-left": [
+        "hyprland/workspaces#pacman",
+        "custom/separator#dot-line",
+        "custom/updater",
+        "custom/separator#dot-line",
+        "group/motherboard",
+        "custom/separator#dot-line",
+        "custom/weather",
+    ],
+    "modules-center": ["clock"],
+    "modules-right": [
+        "tray",
+        "custom/separator#dot-line",
+        "network#speed",
+        "custom/separator#dot-line",
+        "group/audio",
+        "custom/separator#dot-line",
+        "battery",
+    ],
+}

@@ -1,0 +1,7 @@
+[user]
+	name = Mythos_404
+	email = mythos_404@outlook.com
+[commit]
+	template = /home/mythos_404/.gitconf/git-commit-template.txt
+[init]
+	defaultBranch = main

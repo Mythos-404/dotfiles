@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+if [ -d "$1" ]; then
+	eza --icons --color=always --color-scale --group-directories-first -hl --git "$1" && exit 0
+fi
+
+mime=$(file -Lbs --mime-type "$1")
+category=${mime%%/*}
+kind=${mime##*/}
+ext=${1##*.}
+
+# echo "类型: ${category}, 种类: ${kind}, 后缀: ${ext}"
+
+case $kind in
+json)
+	if [ "$ext" = ipynb ]; then
+		jupyter nbconvert --to python --stdout "$1" | bat --terminal-width 68 -f --style full -plpython && exit 0
+	else
+		jq -Cr . "$1" && exit 0
+	fi
+	;;
+vnd.sqlite3)
+	echo ".dump" | sqlite3 "$1" | bat -f --style full -lsql && exit 0
+	;;
+x-7z-compressed)
+	7z l "$1" && exit 0
+	;;
+x-pie-executable)
+	readelf -a "$1" | bat -f --style=plain && exit 0
+	;;
+*)
+	if [[ $category == "text" ]]; then
+		bat -f --style=plain "$1" && exit 0
+	fi
+	;;
+esac
+
+exit 1

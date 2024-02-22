@@ -1,0 +1,50 @@
+sw_volume: 37
+audio_device_state:1:PipeWire Sound Server
+state: stop
+random: 1
+repeat: 0
+single: 0
+consume: 0
+crossfade: 0
+mixrampdb: 0.000000
+mixrampdelay: -1.000000
+playlist_begin
+0:Animation/Fate stay night/Aimer - LAST STARDUST.flac
+1:Animation/処刑少女の生きる道/Paper Bouquet.flac
+2:Animation/結束バンド/青春コンプレックス.flac
+3:Animation/結束バンド/ひとりぼっち東京.flac
+4:Animation/結束バンド/ギターと孤独と蒼い惑星.flac
+5:Animation/結束バンド/ラブソングが歌えない.flac
+6:Animation/結束バンド/あのバンド.flac
+7:Animation/結束バンド/小さな海.flac
+8:Animation/結束バンド/なにが悪い.flac
+9:Animation/結束バンド/星座になれたら.flac
+10:Animation/薬屋のひとりごと/アンビバレント.flac
+11:Animation/薬屋のひとりごと/アンビバレント.mp3
+12:Animation/金装のヴェルメイユ/Mortal With You.flac
+13:Animation/金装のヴェルメイユ/Mortal With You (Japanese Ver.).flac
+14:Animation/魔都精兵のスレイブ/強くて弱くて愛しくて.mp3
+15:Animation/魔都精兵のスレイブ/退屈ESCAPE.mp3
+16:GalGame/Eden*/天門 - Liberating.mp3
+17:Game/Blue Archive/Constant Moderato.flac
+18:Game/Blue Archive/Midsummer cat.flac
+19:Game/Blue Archive/Connected Sky.flac
+20:Game/Blue Archive/Shooting Stars.flac
+21:Game/Blue Archive/Daily Routine 247.flac
+22:Game/Blue Archive/Water Drop.flac
+23:Game/Blue Archive/Signal of Abydos.flac
+24:Game/Blue Archive/Sugar story.flac
+25:Game/Blue Archive/Future Lab.flac
+26:Game/Blue Archive/After the Beep.flac
+27:Game/Blue Archive/Out of Control.flac
+28:Game/崩坏: 星穹铁道/WHITE NIGHT.flac
+29:Game/崩坏: 星穹铁道/不眠之夜.flac
+30:Vocalists/May'n/春夢.mp3
+31:Vocalists/藍月なくる/Ariah (Long Ver.).flac
+32:Vocalists/藍月なくる/Indigrotto/Indigrotto.flac
+33:Vocalists/藍月なくる/Indigrotto/夢の呼応.flac
+34:Vocalists/藍月なくる/Indigrotto/Settlement.flac
+35:Vocalists/藍月なくる/Indigrotto/Killer neuron.flac
+36:Vocalists/藍月なくる/Indigrotto/Codependence.flac
+37:Vocalists/藍月なくる/Indigrotto/Rest in Peace my Dear.flac
+playlist_end

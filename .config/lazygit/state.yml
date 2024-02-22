@@ -1,0 +1,9 @@
+lastupdatecheck: 0
+recentrepos:
+- /home/mythos_404/dotfiles
+- /home/mythos_404/.config/nvim
+- /home/mythos_404/dev/nvim/xmake.nvim
+startuppopupversion: 5
+customcommandshistory: []
+hidecommandlog: false
+ignorewhitespaceindiffview: false
