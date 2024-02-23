@@ -250,6 +250,7 @@ alias mkdir='mkdir -p'
 alias ip='ip -color'
 alias cat='bat -p'
 alias jctl='journalctl -p 3 -xb'
+alias top='btm'
 
 alias ls='eza --icons --color-scale --group-directories-first'
 alias ll='ls -l --git'        # Long format, git status
@@ -276,5 +277,6 @@ alias N='nvim'
 alias lzg='lazygit'
 alias pn='pnpm'
 alias ps='procs'
+alias btp='btop'
 
 alias mpd_update='(cd ~/Music && mpc clear && mpc ls | mpc add && mpc update mpc listall)'
