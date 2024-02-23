@@ -1,4 +1,7 @@
 *.log
 log
+
 state
+state.*
+
 .current_wallpaper

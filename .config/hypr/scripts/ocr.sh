@@ -13,6 +13,7 @@ rofi_run() {
 		-dmenu \
 		-p "OCR" \
 		-markup-rows \
+		-kb-accept-entry "space" \
 		-theme "${RASI}"
 }
 
