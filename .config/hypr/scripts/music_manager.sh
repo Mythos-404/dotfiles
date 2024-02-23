@@ -53,6 +53,7 @@ run_rofi() {
 			-mesg "${mesg}" \
 			${active} ${urgent} \
 			-markup-rows \
+			-kb-accept-entry "space" \
 			-theme "${RASI}"
 
 }
