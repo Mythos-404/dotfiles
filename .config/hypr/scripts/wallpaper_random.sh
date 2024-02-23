@@ -20,4 +20,3 @@ sleep 0.5
 sleep 0.2
 "${USER_SCRIPTS}"/refresh_app.sh
 sleep 0.5
-hyprctl keyword monitor HDMI-A-1,3840x2160@150,1920x-710,1.25,bitdepth,10 &>/dev/null
