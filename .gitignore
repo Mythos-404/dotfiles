@@ -4,4 +4,9 @@ log
 state
 state.*
 
+README
+
+# ipython
+history.*
+
 .current_wallpaper
