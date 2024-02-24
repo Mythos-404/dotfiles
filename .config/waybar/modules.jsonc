@@ -1,5 +1,3 @@
-//* ---- 💫 https://github.com/JaKooLit 💫 ---- *//
-
 {
     // HYPRLAND WORKSPACES. CHOOSE as desired and place on waybar configs
     // CIRCLES Style
@@ -492,8 +490,8 @@
         "interval": 3600,
         "return-type": "json",
         "tooltip": true,
-        "exec": "~/.config/hypr/scripts/om_weather.sh",
-        //"exec": "~/.config/hypr/scripts/weather.py",
+        // "exec": "~/.config/hypr/scripts/om_weather.sh",
+        "exec": "~/.config/hypr/scripts/weather.py",
         // "exec-if": "ping wttr.in -c1",
     },
 
