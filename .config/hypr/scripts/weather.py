@@ -6,7 +6,6 @@ import time
 from pathlib import Path
 
 import orjson as json
-import requests
 
 CITY = "Jinan"
 PARAMS = {
@@ -42,6 +41,7 @@ def get_daytime_icon(day_icon: str, moon_icon: str) -> str:
 if ((os.path.getctime(CACHE_FILE) - time.time()) >= EXPIRATION_DATE) or (
     os.stat(CACHE_FILE).st_size == 0
 ):
+    import requests
     data = requests.get("https://api.open-meteo.com/v1/forecast", params=PARAMS).json()
     weather = {
         "sunset": data["daily"]["sunset"][0],
