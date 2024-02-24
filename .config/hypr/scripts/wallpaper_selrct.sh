@@ -10,7 +10,7 @@ TYPE="random"
 DURATION=1
 SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION"
 
-mapfile -t PICS < <(eza "$WALL_DIR" | rg ".jpg$|.jpeg$|.png$|.gif$")
+mapfile -t PICS < <(fd '.jpg$|.jpeg$|.png$|.gif$' "${WALL_DIR}")
 RANDOM_PIC="${PICS[$RANDOM % ${#PICS[@]}]}"
 RANDOM_PIC_NAME="${#PICS[@]}. random"
 
@@ -23,7 +23,7 @@ menu() {
 		if echo "${PICS[$i]}" | rg -q .gif$; then
 			printf '%s\n' "${PICS[$i]}"
 		else
-			printf '%s\x00icon\x1f%s/%s\n' "$(echo "${PICS[$i]}" | cut -d. -f1)" "${WALL_DIR}" "${PICS[$i]}"
+			printf '%s\x00icon\x1f%s\n' "${PICS[${i}]##*/}" "${PICS[${i}]}"
 		fi
 	done
 
@@ -49,7 +49,7 @@ main() {
 
 	# Random choice case
 	if [ "$choice" = "$RANDOM_PIC_NAME" ]; then
-		swww img "${WALL_DIR}/${RANDOM_PIC}" $SWWW_PARAMS
+		swww img "${RANDOM_PIC}" $SWWW_PARAMS
 		refresh_app
 		exit 0
 	fi
@@ -65,7 +65,7 @@ main() {
 	done
 
 	if [[ $pic_index -ne -1 ]]; then
-		swww img "${WALL_DIR}/${PICS[$pic_index]}" $SWWW_PARAMS
+		swww img "${PICS[$pic_index]}" $SWWW_PARAMS
 	else
 		echo "Image not found."
 		exit 1

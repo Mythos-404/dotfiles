@@ -14,8 +14,6 @@
     "modules-left": [
         "hyprland/workspaces#pacman",
         "custom/separator#dot-line",
-        "custom/updater",
-        "custom/separator#dot-line",
         "group/motherboard",
         "custom/separator#dot-line",
         "custom/weather",
