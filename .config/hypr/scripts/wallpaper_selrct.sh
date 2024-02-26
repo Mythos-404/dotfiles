@@ -15,7 +15,7 @@ RANDOM_PIC="${PICS[$RANDOM % ${#PICS[@]}]}"
 RANDOM_PIC_NAME="${#PICS[@]}. random"
 
 # Rofi command
-rofi_command="rofi -show -dmenu -config ~/.config/rofi/config-wallpaper.rasi"
+ROFI_COMMAND="rofi -show -dmenu -config ~/.config/rofi/config-wallpaper.rasi"
 
 menu() {
 	for i in "${!PICS[@]}"; do
@@ -27,7 +27,7 @@ menu() {
 		fi
 	done
 
-	printf '%s\n' "${RANDOM_PIC_NAME}"
+	printf '%s\x00icon\x1f%s\n' "${RANDOM_PIC_NAME}" "${RANDOM_PIC}"
 }
 
 refresh_app() {
@@ -40,7 +40,7 @@ refresh_app() {
 }
 
 main() {
-	choice=$(menu | ${rofi_command})
+	choice=$(menu | ${ROFI_COMMAND})
 
 	# No choice case
 	if [[ -z $choice ]]; then

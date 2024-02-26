@@ -1,36 +1,32 @@
 #!/usr/bin/env bash
 
-# Actions:
-# CTRL Del to delete an entry
-# ALT Del to wipe clipboard contents
+TMP_DIR="/tmp/cliphist"
+rm -rf "$TMP_DIR"
+
+mkdir -p "$TMP_DIR"
+
+read -r -d '' prog <<EOF
+/^[0-9]+\s<meta http-equiv=/ { next }
+match(\$0, /^([0-9]+)\s(\[\[\s)?binary.*(jpg|jpeg|png|bmp)/, grp) {
+    system("echo " grp[1] "\\\\\t | cliphist decode >$TMP_DIR/"grp[1]"."grp[3])
+    print \$0"\0icon\x1f$TMP_DIR/"grp[1]"."grp[3]
+    next
+}
+1
+EOF
+
 while true; do
 	result=$(
-		rofi -dmenu \
-			-kb-custom-1 "Control-Delete" \
-			-kb-custom-2 "Alt-Delete" \
-			-config ~/.config/rofi/config-clipboard.rasi < <(cliphist list)
+		rofi -dmenu -config ~/.config/rofi/config-clipboard.rasi < <(cliphist list | gawk "${prog}")
 	)
 
-	case "$?" in
-	1)
+	case "${result}" in
+	"")
 		exit
 		;;
-	0)
-		case "${result}" in
-		"")
-			continue
-			;;
-		*)
-			cliphist decode <<<"${result}" | wl-copy
-			exit
-			;;
-		esac
-		;;
-	10)
-		cliphist delete <<<"${result}"
-		;;
-	11)
-		cliphist wipe
+	*)
+		cliphist decode <<<"${result}" | wl-copy
+		exit
 		;;
 	esac
 done
