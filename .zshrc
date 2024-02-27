@@ -280,3 +280,4 @@ alias ps='procs'
 alias btp='btop'
 
 alias mpd_update='(cd ~/Music && mpc clear && mpc ls | mpc add && mpc update mpc listall)'
+alias us_alas='(cd ~/.local/share/AzurLaneAutoScript && podman-compose up &> /dev/null &) &> /dev/null && echo "Alas Run!"'
