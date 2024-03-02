@@ -161,7 +161,7 @@ cli_init() {
 
 # ============= Path ===============
 # custom bin
-# export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin/scripts:$PATH"
 
 # rust
 export PATH="$PATH:$HOME/.cargo/bin"
@@ -243,14 +243,17 @@ export MCFLY_FUZZY=2
 export MCFLY_RESULTS=50
 
 # ============= Alias ==============
-alias sudo='sudo'
-alias vim='nvim'
-alias rm='echo "别用 rm 了好吗";false'
-alias mkdir='mkdir -p'
+alias sudo='sudo '
+
 alias ip='ip -color'
-alias cat='bat -p'
 alias jctl='journalctl -p 3 -xb'
 alias top='btm'
+alias vim='nvim'
+
+alias cat='bat -p'
+alias mkdir='mkdir -p'
+alias cp='advcp -rvgi'
+alias mv='advmv -vg'
 
 alias ls='eza --icons --color-scale --group-directories-first'
 alias ll='ls -l --git'        # Long format, git status
@@ -261,6 +264,7 @@ alias lk='ll -ssize'          # Long format, largest file size last
 alias lt='ll -smodified'      # Long format, newest modification time last
 alias lc='ll -schanged'       # Long format, newest status change (ctime) last
 
+alias rm='echo "别用 rm 了好吗";false'
 alias tp='gtrash put'
 alias tf='gtrash find'
 alias te='gtrash find --rm'
@@ -278,6 +282,3 @@ alias lzg='lazygit'
 alias pn='pnpm'
 alias ps='procs'
 alias btp='btop'
-
-alias mpd_update='(cd ~/Music && mpc clear && mpc ls | mpc add && mpc update mpc listall)'
-alias us_alas='(cd ~/.local/share/AzurLaneAutoScript && podman-compose up &> /dev/null &) &> /dev/null && echo "Alas Run!"'

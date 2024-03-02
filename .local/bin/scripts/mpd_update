@@ -1,0 +1,10 @@
+#!/bin/env bash
+
+cd ~/Music || exit
+
+mpc clear
+
+mpc ls | mpc add
+
+mpc update
+mpc listall

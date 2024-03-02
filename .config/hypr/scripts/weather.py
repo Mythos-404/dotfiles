@@ -68,9 +68,9 @@ def get_json() -> dict:
             current_icon = get_daytime_icon("", "")
         case 1 | 2 | 3:  # 多云
             current_icon = get_daytime_icon("", "")
-        case x if 50 <= x <= 59:  # 毛毛雨
-            current_icon = get_daytime_icon("", "")
         case 60 | 61:  # 小雨
+            current_icon = get_daytime_icon("", "")
+        case x if 50 <= x <= 59:  # 毛毛雨
             current_icon = get_daytime_icon("", "")
         case 62 | 63 | 64 | 65:  # 中到大雨
             current_icon = get_daytime_icon("", "")
