@@ -1,19 +1,22 @@
 import atexit
 import collections
 import datetime
-import functools
-import itertools
 import math
 import os
 import random
 import sys
 import time
+from functools import *  # noqa
+from itertools import *  # noqa
 
 import orjson as json
+import tqdm as tq
+from more_itertools import *  # noqa
 from rich import inspect, print
+from tqdm import tqdm
 
 # -------------- Useful Macros -----------------------------------------
-ip = get_ipython()  # noqa: F821
+ip = get_ipython()  # noqa
 
 
 def is_module_available(module_name):
@@ -91,7 +94,7 @@ def cpp(line, cell):
     standard output."""
     # We first retrieve the current IPython interpreter
     # instance.
-    ip = get_ipython()  # noqa: F821
+    ip = get_ipython()  # noqa
 
     # We define the source and executable filenames.
     source_filename = "_temp.cpp"
