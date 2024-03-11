@@ -835,7 +835,7 @@
   # typeset -g POWERLEVEL9K_TODO_CONTENT_EXPANSION='$P9K_TODO_FILTERED_TASK_COUNT'
 
   # Custom icon.
-  # typeset -g POWERLEVEL9K_TODO_VISUAL_IDENTIFIER_EXPANSION='⭐'
+  typeset -g POWERLEVEL9K_TODO_VISUAL_IDENTIFIER_EXPANSION=' '
 
   ###########[ timewarrior: timewarrior tracking status (https://timewarrior.net/) ]############
   # Timewarrior color.
