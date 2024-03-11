@@ -272,7 +272,7 @@ alias tt='gtrash restore'
 alias tg='gtrash restore-group'
 alias ts='gtrash summary'
 
-alias copy='wl-copy'
+alias copy='wl-copy -n'
 alias paste='wl-paste'
 
 alias P='paru'
