@@ -181,6 +181,14 @@ export EDITOR=nvim
 export VISUAL=nvim
 export LESSOPEN='|~/.lessfilter %s'
 
+# rustup
+export RUSTUP_DIST_SERVER="https://rsproxy.cn"
+export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
+export CARGO_UNSTABLE_SPARSE_REGISTRY=true
+
+# UV
+export UV_INDEX_URL="https://mirrors.bfsu.edu.cn/pypi/web/simple"
+
 # autopair
 export AUTOPAIR_INIT_INHIBIT=true
 
@@ -229,11 +237,6 @@ export FZF_DEFAULT_OPTS=" \
 
 # zoxide
 export _ZO_FZF_OPTS="--exact --no-sort --bind=ctrl-z:ignore,btab:up,tab:down --cycle --keep-right --border=sharp --height=95% --info=inline --layout=reverse --tabstop=1 --select-1 --preview='eza --icons --color-scale --group-directories-first {2..}' --preview-window=down,30%,sharp"
-
-# rustup
-export RUSTUP_DIST_SERVER="https://rsproxy.cn"
-export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
-export CARGO_UNSTABLE_SPARSE_REGISTRY=true
 
 # mcfiy
 export MCFLY_KEY_SCHEME=vim
