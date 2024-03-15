@@ -10,10 +10,10 @@ TYPE="random"
 DURATION=1
 SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION"
 
-mapfile -t PICS < <(eza "$WALL_DIR" | rg ".jpg$|.jpeg$|.png$|.gif$")
+mapfile -t PICS < <(fd '.jpg$|.jpeg$|.png$|.gif$' "${WALL_DIR}")
 RANDOM_PIC="${PICS[$RANDOM % ${#PICS[@]}]}"
 
-swww query || swww init && swww img "${WALL_DIR}/${RANDOM_PIC}" ${SWWW_PARAMS}
+swww query || swww init && swww img "${RANDOM_PIC}" ${SWWW_PARAMS}
 
 sleep 0.5
 "${USER_SCRIPTS}"/pywal_swww.sh
