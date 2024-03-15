@@ -169,6 +169,10 @@ export PATH="$PATH:$HOME/.cargo/bin"
 # ruby
 export PATH="$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin"
 
+# haskell
+export GHCUP_INSTALL_BASE_PREFIX="$HOME"
+export PATH="$PATH:$GHCUP_INSTALL_BASE_PREFIX/.ghcup/bin"
+
 
 # ============= Conf ===============
 # lang
