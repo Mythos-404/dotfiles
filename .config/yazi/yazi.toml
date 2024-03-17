@@ -125,6 +125,7 @@ prepend_previewers = [
     { mime = "audio/*", run = "exifaudio"},
     { name = "*.md",    run = "glow" },
     { name = "*.csv",   run = "miller"},
+    { name = "*.svg",   run = "svg"},
 ]
 append_previewers = [
     { name = "*", run = "hexyl" },
