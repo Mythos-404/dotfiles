@@ -282,6 +282,9 @@ alias ts='gtrash summary'
 alias copy='wl-copy -n'
 alias paste='wl-paste'
 
+alias icat='kitten icat'
+alias ssh='kitten ssh'
+
 alias P='paru'
 alias Y='yazi'
 alias N='nvim'
