@@ -8,3 +8,12 @@ class = "kitty-dropterm"
 size = "75% 60%"
 max_size = "1920px 100%"
 margin = 50
+
+
+[scratchpads.ncmpcpp]
+animation = "fromTop"
+command = "kitty --class ncmpcpp ncmpcpp"
+class = "ncmpcpp"
+size = "75% 60%"
+max_size = "1920px 100%"
+margin = 50
