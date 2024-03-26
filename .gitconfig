@@ -5,3 +5,19 @@
 	template = /home/mythos_404/.gitconf/git-commit-template.txt
 [init]
 	defaultBranch = main
+
+[core]
+	pager = delta
+[pager]
+	log = rg -v '^    <!-- ' | delta  # or less
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	side-by-side = true
+
+[merge]
+	tool = nvimdiff
+[mergetool]
+	prompt = false
+	guiDefault = false
+	keepBackup = false
