@@ -5,12 +5,11 @@ iDIR="$HOME/.config/swaync/icons"
 
 # Get brightness
 get_backlight() {
-	brightnessctl -m | cut -d, -f4
+	ddcutil getvcp 10 | rg -No 'value =    (.*),' -r '$1' | tr -d '[:space:]'
 }
 
 # Get icons
 get_icon() {
-	current=$(get_backlight | sed 's/%//')
 	if [ "$current" -le "20" ]; then
 		icon="$iDIR/brightness-20.png"
 	elif [ "$current" -le "40" ]; then
@@ -30,7 +29,13 @@ notify_user() {
 
 # Change brightness
 change_backlight() {
-	brightnessctl set "${1}" && get_icon && notify_user
+	ddcutil setvcp 10 "${1}" "${2}"
+
+	current=$(get_backlight)
+
+	brightnessctl set "${current}"
+
+	get_icon && notify_user
 }
 
 # Execute accordingly
@@ -39,10 +44,10 @@ case "$1" in
 	get_backlight
 	;;
 "--inc")
-	change_backlight "+${2:-10%}"
+	change_backlight "+" "${2:-10}"
 	;;
 "--dec")
-	change_backlight "${2:-10%}-"
+	change_backlight "-" "${2:-10}"
 	;;
 *)
 	get_backlight

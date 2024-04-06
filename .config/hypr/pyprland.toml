@@ -8,30 +8,34 @@ class = "kitty-dropterm"
 margin = 50
 size = "75% 60%"
 max_size = "1920px 100%"
+excludes = "*"
 
 [scratchpads.yazi]
 animation = "fromTop"
-command = "kitty --class yazi yazi"
-class = "yazi"
+command = "kitty --class kitty-yazi yazi"
+class = "kitty-yazi"
 lazy = true
 margin = 50
 size = "75% 60%"
 max_size = "1920px 100%"
+excludes = "*"
 
 [scratchpads.ncmpcpp]
 animation = "fromTop"
-command = "kitty --class ncmpcpp ncmpcpp"
-class = "ncmpcpp"
+command = "kitty --class kitty-ncmpcpp ncmpcpp"
+class = "kitty-ncmpcpp"
 lazy = true
 margin = 50
 size = "75% 60%"
 max_size = "1920px 100%"
+excludes = "*"
 
 [scratchpads.btop]
 animation = "fromTop"
-command = "kitty --class btop btop"
-class = "btop"
+command = "kitty --class kitty-btop btop"
+class = "kitty-btop"
 lazy = true
 margin = 50
 size = "75% 60%"
 max_size = "1920px 100%"
+excludes = "*"
