@@ -1,0 +1,14 @@
+{
+    "diagnostics.globals": [
+        "ya",
+        "cx",
+        "ui",
+        "fs",
+        "Url",
+        "Manager",
+        "BOOT",
+        "MANAGER",
+        "THEME",
+        "Command"
+    ]
+}

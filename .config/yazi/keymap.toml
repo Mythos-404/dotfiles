@@ -14,7 +14,10 @@ prepend_keymap = [
     { on = [ "I" ], run = "plugin keyjump --args='global'",      desc = "Keyjump (Global mode)"},
     
     # smart-enter
-    { on = [ "l" ], run =  "plugin --sync smart-enter", desc = "Enter the child directory, or open the file"}
+    { on = [ "l" ], run =  "plugin --sync smart-enter", desc = "Enter the child directory, or open the file"},
+
+    # file-actions
+    { on = [ "e" ], run = "plugin file-actions --args='around '", desc= "Perform actions on selected files"},
 ]
 keymap = [
     # ripdrag
