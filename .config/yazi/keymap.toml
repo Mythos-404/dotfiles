@@ -1,8 +1,27 @@
 "$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
 
 [manager]
-
 prepend_keymap = [
+    # open shell
+    { on = [ "<C-s>" ], run = 'shell "$SHELL" --block --confirm', desc = "Open shell here" },
+
+    # ripdrag
+    { on = [ "<C-n>" ], run = '''
+        shell 'ripdrag "$@" -x 2>/dev/null &' --confirm
+    ''', desc = "Run drag and drop" },
+
+    # lazygit
+    { on = [ "<C-g>" ], run = "shell --block --confirm 'lazygit'", desc = "Run lazygit" },
+
+    # copy to system clipboard
+    { on = [ "y" ], run = [ "yank",
+        '''
+        shell --confirm 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list'
+        '''
+    ], desc = "Copy file and to system clipboard" },
+
+    # plugin
+
     # bookmarks
     { on = [ "m" ],      run = "plugin bookmarks --args=save",            desc = "Save current position as a bookmark"}, 
 	{ on = [ "'" ],      run = "plugin bookmarks --args=jump",            desc = "Jump to a bookmark" },
@@ -19,22 +38,8 @@ prepend_keymap = [
     # file-actions
     { on = [ "e" ], run = "plugin file-actions --args='around '", desc= "Perform actions on selected files"},
 ]
+
 keymap = [
-    # ripdrag
-    { on = [ "<C-n>" ], run = '''
-        shell 'ripdrag "$@" -x 2>/dev/null &' --confirm
-    ''', desc = "Run drag and drop" },
-
-    # lazygit
-    { on = [ "<C-g>" ], run = "shell --block --confirm 'lazygit'", desc = "Run lazygit" },
-
-    # copy to system clipboard
-    { on = [ "y" ], run = [ "yank",
-        '''
-        shell --confirm 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list'
-        '''
-    ], desc = "Copy file and to system clipboard" },
-
 	{ on = [ "<Esc>" ], run = "escape",             desc = "Exit visual mode, clear selected, or cancel search" },
 	{ on = [ "<C-[>" ], run = "escape",             desc = "Exit visual mode, clear selected, or cancel search" },
 	{ on = [ "q" ],     run = "quit",               desc = "Exit the process" },
