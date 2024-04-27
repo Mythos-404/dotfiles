@@ -7,8 +7,11 @@ prepend_keymap = [
 
     # ripdrag
     { on = [ "<C-n>" ], run = '''
-        shell 'ripdrag "$@" -x 2>/dev/null &' --confirm
+        shell 'ripdrag "$@" -nx 2>/dev/null &' --confirm
     ''', desc = "Run drag and drop" },
+    { on = [ "<C-m>" ], run = '''
+        shell 'ripdrag "$@" -Anx 2>/dev/null &' --confirm
+    ''', desc = "Run all drag and drop" },
 
     # lazygit
     { on = [ "<C-g>" ], run = "shell --block --confirm 'lazygit'", desc = "Run lazygit" },
