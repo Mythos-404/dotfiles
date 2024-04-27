@@ -2,40 +2,46 @@
 plugins = ["scratchpads"]
 
 [scratchpads.term]
-animation = "fromTop"
-command = "kitty --class kitty-dropterm"
 class = "kitty-dropterm"
+command = "kitty --class kitty-dropterm"
+animation = "fromTop"
 margin = 50
 size = "75% 60%"
 max_size = "1920px 100%"
-excludes = "*"
 
 [scratchpads.yazi]
+class = "kitty --class kitty-yazi yazi"
+command = "kitty-yazi"
 animation = "fromTop"
-command = "kitty --class kitty-yazi yazi"
-class = "kitty-yazi"
-lazy = true
 margin = 50
 size = "75% 60%"
 max_size = "1920px 100%"
-excludes = "*"
+lazy = true
 
 [scratchpads.ncmpcpp]
 animation = "fromTop"
 command = "kitty --class kitty-ncmpcpp ncmpcpp"
 class = "kitty-ncmpcpp"
-lazy = true
 margin = 50
 size = "75% 60%"
 max_size = "1920px 100%"
-excludes = "*"
+lazy = true
 
 [scratchpads.btop]
 animation = "fromTop"
 command = "kitty --class kitty-btop btop"
 class = "kitty-btop"
-lazy = true
 margin = 50
 size = "75% 60%"
 max_size = "1920px 100%"
-excludes = "*"
+lazy = true
+
+[scratchpads.ipython]
+animation = "fromRight"
+command = "kitty --class kitty-ipython ipython"
+class = "kitty-ipython"
+margin = 12
+size = "40% 90%"
+max_size = "1120px 100%"
+unfocus = "hide"
+lazy = true
