@@ -2,17 +2,17 @@
 plugins = ["scratchpads"]
 
 [scratchpads.term]
+animation = "fromTop"
 class = "kitty-dropterm"
 command = "kitty --class kitty-dropterm"
-animation = "fromTop"
 margin = 50
 size = "75% 60%"
 max_size = "1920px 100%"
 
 [scratchpads.yazi]
+animation = "fromTop"
 class = "kitty --class kitty-yazi yazi"
 command = "kitty-yazi"
-animation = "fromTop"
 margin = 50
 size = "75% 60%"
 max_size = "1920px 100%"
