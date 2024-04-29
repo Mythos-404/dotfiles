@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # Polkit possible paths files to check
 polkit=(
@@ -9,16 +9,16 @@ polkit=(
 executed=false # Flag to track if a file has been executed
 
 # Loop through the list of files
-for file in "${polkit[@]}"; do
-	if [ -e "$file" ]; then
+for file ($polkit) {
+	if [[ -e $file ]] {
 		echo "File $file found, executing command..."
-		"${file}"
+		"$file"
 		executed=true
 		break
-	fi
-done
+	}
+}
 
 # If none of the files were found, you can add a fallback command here
-if [ "$executed" == false ]; then
+if [[ "$executed" == false ]] {
 	echo "None of the specified files were found. Install a Polkit"
-fi
+}

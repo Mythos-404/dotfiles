@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 import time
 
 import orjson as json
@@ -18,10 +19,19 @@ PARAMS = {
 
 CACHE_DIR = f"{os.path.expanduser('~')}/.cache/rbn"
 CACHE_FILE = f"{CACHE_DIR}/om_weather.json"
-EXPIRATION_DATE = 60 * 30
+EXPIRATION_DATE = 60 * 30  # 30 分钟
 
 
-def check_cache():
+def print_waybar_json(text: str | dict, alt: str = "", tooltip: str = "") -> None:
+    if isinstance(text, dict):
+        print(json.dumps(text).decode("utf-8"))
+    else:
+        print(
+            json.dumps({"text": text, "alt": alt, "tooltip": tooltip}).decode("utf-8")
+        )
+
+
+def check_cache() -> None:
     if not os.path.isdir(CACHE_DIR):
         os.mkdir(CACHE_DIR)
 
@@ -32,23 +42,32 @@ def check_cache():
 
 
 # 请求天气 API 并缓存结果
-def get_whater_api():
-    if ((os.path.getctime(CACHE_FILE) - time.time()) >= EXPIRATION_DATE) or (
+def get_whater_api() -> None:
+    if ((time.time() - os.path.getctime(CACHE_FILE)) >= EXPIRATION_DATE) or (
         os.stat(CACHE_FILE).st_size == 0
     ):
         import requests as req
 
-        data = req.get("https://api.open-meteo.com/v1/forecast", params=PARAMS).json()
-        weather = {
-            "sunset": data["daily"]["sunset"][0],
-            "sunrise": data["daily"]["sunrise"][0],
-            "weather_code": data["current"]["weather_code"],
-            "temp": data["current"]["temperature_2m"],
-            "temp_max": data["daily"]["temperature_2m_max"][0],
-            "temp_min": data["daily"]["temperature_2m_min"][0],
-        }
-        with open(CACHE_FILE, mode="w") as f:
-            f.write(json.dumps(weather).decode("utf-8"))
+        try:
+            data = req.get(
+                "https://api.open-meteo.com/v1/forecast", params=PARAMS
+            ).json()
+            weather = {
+                "sunset": data["daily"]["sunset"][0],
+                "sunrise": data["daily"]["sunrise"][0],
+                "weather_code": data["current"]["weather_code"],
+                "temp": data["current"]["temperature_2m"],
+                "temp_max": data["daily"]["temperature_2m_max"][0],
+                "temp_min": data["daily"]["temperature_2m_min"][0],
+            }
+            with open(CACHE_FILE, mode="w") as f:
+                f.write(json.dumps(weather).decode("utf-8"))
+        except req.exceptions.ConnectionError:
+            print_waybar_json("NotNetwork 󰌙 ")
+            sys.exit(0)
+        except req.exceptions.Timeout:
+            print_waybar_json("Timeout 󰌙 ")
+            sys.exit(0)
 
 
 def get_json() -> dict:
@@ -91,4 +110,4 @@ def get_json() -> dict:
 if __name__ == "__main__":
     check_cache()
     get_whater_api()
-    print(json.dumps(get_json()).decode("utf-8"))
+    print_waybar_json(get_json())

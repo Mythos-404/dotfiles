@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # Scripts for volume controls for audio and mic
 
@@ -39,55 +39,55 @@ notify_user() {
 
 # Increase Volume
 inc_volume() {
-	if [ "$(pamixer --get-mute)" == "true" ]; then
+	if [[ "$(pamixer --get-mute)" == "true" ]] {
 		pamixer -u && notify_user
-	fi
+	}
 	pamixer -i "${1}" && notify_user
 }
 
 # Decrease Volume
 dec_volume() {
-	if [ "$(pamixer --get-mute)" == "true" ]; then
+	if [[ "$(pamixer --get-mute)" == "true" ]] {
 		pamixer -u && notify_user
-	fi
+	}
 	pamixer -d "${1}" && notify_user
 }
 
 # Toggle Mute
 toggle_mute() {
-	if [ "$(pamixer --get-mute)" == "false" ]; then
+	if [[ "$(pamixer --get-mute)" == "false" ]] {
 		pamixer -m && notify-send -e -u low -i "$iDIR/volume-mute.png" "Volume Switched OFF"
-	elif [ "$(pamixer --get-mute)" == "true" ]; then
+	} elif [[ "$(pamixer --get-mute)" == "true" ]] {
 		pamixer -u && notify-send -e -u low -i "$(get_icon)" "Volume Switched ON"
-	fi
+	}
 }
 
 # Toggle Mic
 toggle_mic() {
-	if [ "$(pamixer --default-source --get-mute)" == "false" ]; then
+	if [[ "$(pamixer --default-source --get-mute)" == "false" ]] {
 		pamixer --default-source -m && notify-send -e -u low -i "$iDIR/microphone-mute.png" "Microphone Switched OFF"
-	elif [ "$(pamixer --default-source --get-mute)" == "true" ]; then
+	} elif [[ "$(pamixer --default-source --get-mute)" == "true" ]] {
 		pamixer -u --default-source u && notify-send -e -u low -i "$iDIR/microphone.png" "Microphone Switched ON"
-	fi
+	}
 }
 # Get Mic Icon
 get_mic_icon() {
 	current=$(pamixer --default-source --get-volume)
-	if [[ "$current" -eq "0" ]]; then
+	if [[ "$current" == "0" ]] {
 		echo "$iDIR/microphone-mute.png"
-	else
+	} else {
 		echo "$iDIR/microphone.png"
-	fi
+	}
 }
 
 # Get Microphone Volume
 get_mic_volume() {
 	volume=$(pamixer --default-source --get-volume)
-	if [[ "$volume" -eq "0" ]]; then
+	if [[ "$volume" == "0" ]] {
 		echo "Muted"
-	else
+	} else {
 		echo "$volume%"
-	fi
+	}
 }
 
 # Notify for Microphone
@@ -99,17 +99,17 @@ notify_mic_user() {
 
 # Increase MIC Volume
 inc_mic_volume() {
-	if [ "$(pamixer --default-source --get-mute)" == "true" ]; then
+	if [[ "$(pamixer --default-source --get-mute)" == "true" ]] {
 		pamixer --default-source -u && notify_mic_user
-	fi
+	}
 	pamixer --default-source -i "${1}" && notify_mic_user
 }
 
 # Decrease MIC Volume
 dec_mic_volume() {
-	if [ "$(pamixer --default-source --get-mute)" == "true" ]; then
+	if [[ "$(pamixer --default-source --get-mute)" == "true" ]] {
 		pamixer --default-source -u && notify_mic_user
-	fi
+	}
 	pamixer --default-source -d "${1}" && notify_mic_user
 }
 

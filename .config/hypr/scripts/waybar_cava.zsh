@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 bar="▁▂▃▄▅▆▇█"
 dict="s/;//g"
@@ -7,9 +7,9 @@ dict="s/;//g"
 bar_length=${#bar}
 
 # Create dictionary to replace char with bar
-for ((i = 0; i < bar_length; i++)); do
+for ((i = 0; i < bar_length; i++)) {
 	dict+=";s/$i/${bar:$i:1}/g"
-done
+}
 
 # Create cava config
 config_file="/tmp/bar_cava_config"

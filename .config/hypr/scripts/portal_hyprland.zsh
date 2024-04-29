@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 sleep 1
 killall xdg-desktop-portal-hyprland

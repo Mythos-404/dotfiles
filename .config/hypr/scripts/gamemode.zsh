@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 notif="$HOME/.config/swaync/images/bell.png"
 
-HYPRGAMEMODE=$(hyprctl getoption animations:enabled | awk 'NR==1{print $2}')
-if [ "$HYPRGAMEMODE" = 1 ]; then
-	hyprctl --batch "\
+HYPRGAMEMODE=$(hyprctl -j getoption animations:enabled | jq '.int')
+if [[ $HYPRGAMEMODE = 1 ]] {
+    hyprctl --batch "\
         keyword animations:enabled 0;\
         keyword decoration:drop_shadow 0;\
         keyword decoration:blur:enabled 0;\
@@ -12,9 +12,9 @@ if [ "$HYPRGAMEMODE" = 1 ]; then
         keyword general:gaps_out 0;\
         keyword general:border_size 1;\
         keyword decoration:rounding 0"
-	notify-send -e -u low -i "${notif}" "Open Game Mode"
-	exit
-fi
+    notify-send -e -u low -i $notif "Open Game Mode"
+    exit
+}
 
 hyprctl reload
-notify-send -e -u low -i "${notif}" "Close Game Mode"
+notify-send -e -u low -i $notif "Close Game Mode"

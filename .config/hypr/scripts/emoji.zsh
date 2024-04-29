@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # Rofi Emoticons. Not my own. Cant remember the source
 
-sed '1,/^### DATA ###$/d' "${0}" | 
+sed '1,/^### DATA ###$/d' $0 | 
 rofi -dmenu -config ~/.config/rofi/config-long.rasi| 
 cut -d ' ' -f 1 | tr -d '\n' | wl-copy
 
