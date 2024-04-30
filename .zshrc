@@ -259,7 +259,7 @@ alias vim='nvim'
 
 alias cat='bat -p'
 alias mkdir='mkdir -p'
-alias cp='advcp -rvgi'
+alias cp='advcp -rvgi --reflink=always'
 alias mv='advmv -vg'
 
 alias ls='eza --icons --color-scale --group-directories-first'
