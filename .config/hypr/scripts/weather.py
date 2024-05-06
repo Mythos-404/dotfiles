@@ -26,9 +26,7 @@ def print_waybar_json(text: str | dict, alt: str = "", tooltip: str = "") -> Non
     if isinstance(text, dict):
         print(json.dumps(text).decode("utf-8"))
     else:
-        print(
-            json.dumps({"text": text, "alt": alt, "tooltip": tooltip}).decode("utf-8")
-        )
+        print(json.dumps({"text": text, "alt": alt, "tooltip": tooltip}).decode("utf-8"))
 
 
 def check_cache() -> None:
@@ -43,15 +41,11 @@ def check_cache() -> None:
 
 # 请求天气 API 并缓存结果
 def get_whater_api() -> None:
-    if ((time.time() - os.path.getctime(CACHE_FILE)) >= EXPIRATION_DATE) or (
-        os.stat(CACHE_FILE).st_size == 0
-    ):
+    if ((time.time() - os.path.getctime(CACHE_FILE)) >= EXPIRATION_DATE) or (os.stat(CACHE_FILE).st_size == 0):
         import requests as req
 
         try:
-            data = req.get(
-                "https://api.open-meteo.com/v1/forecast", params=PARAMS
-            ).json()
+            data = req.get("https://api.open-meteo.com/v1/forecast", params=PARAMS).json()
             weather = {
                 "sunset": data["daily"]["sunset"][0],
                 "sunrise": data["daily"]["sunrise"][0],
@@ -78,14 +72,14 @@ def get_json() -> dict:
         else:
             return moon_icon
 
-    with open(CACHE_FILE, mode="r") as f:
+    with open(CACHE_FILE) as f:
         weather = json.loads(f.read())
 
     # WMO 天气代码 url: https://www.nodc.noaa.gov/archive/arc0021/0002199/1.1/data/0-data/HTML/WMO-CODE/WMO4677.HTM
     match weather["weather_code"]:
-        case 0:  # 晴天
+        case 0 | 1:  # 晴天
             current_icon = get_daytime_icon("", "")
-        case 1 | 2 | 3:  # 多云
+        case 2 | 3:  # 多云
             current_icon = get_daytime_icon("", "")
         case 60 | 61:  # 小雨
             current_icon = get_daytime_icon("", "")
