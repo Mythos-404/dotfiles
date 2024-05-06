@@ -11,7 +11,7 @@ max_size = "1920px 100%"
 
 [scratchpads.yazi]
 animation = "fromTop"
-command = "kitty --class kitty-yazi yazi"
+command = "kitty --class kitty-yazi zsh -c 'yazi'"
 class = "kitty-yazi"
 margin = 50
 size = "75% 60%"
