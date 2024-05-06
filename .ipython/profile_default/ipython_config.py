@@ -418,13 +418,14 @@ c.InteractiveShell.autocall = 1
 
 
 def banner1():
+    import re  # noqa: I001j
     import sys  # noqa: I001j
 
     import IPython  # noqa: I001j
 
     global c
     c.InteractiveShell.banner1 = (
-        f"  Python\t: {sys.version.replace(' ', ' ')} [{sys.executable}]\n"
+        f"  Python\t: {re.sub(r', \d+:\d+:\d+', '', sys.version)} [{sys.executable}]\n"
         + f"  IPython\t: {IPython.__version__}"
     )
 
