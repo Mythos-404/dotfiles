@@ -1,4 +1,4 @@
-* {{
+* {{ "{" }}
     border-colour:               var(selected);
     handle-colour:               var(selected);
     background-colour:           var(background);
@@ -25,9 +25,9 @@
 
     background:     rgba(0,0,0,0.4);
     background-alt: rgba(0,0,0,0);
-    foreground:     {foreground};
-    active:         {color1};
-    selected:       {color2};
-    urgent:         {color3};
-    border:         {color4};
-}}
+    foreground:     {{foreground}};
+    active:         {{color1}};
+    selected:       {{color2}};
+    urgent:         {{color3}};
+    border:         {{color4}};
+{{ "}" }}

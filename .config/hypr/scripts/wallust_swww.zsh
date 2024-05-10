@@ -32,9 +32,6 @@ for output ($monitor_outputs) {
 
 # Check the flag before executing further commands
 if [[ $ln_success == true ]] {
-	# execute pywal
-	# wal -i "$wallpaper_path"
-
-	# execute pywal skipping tty and terminal changes
-	wal -i "${wallpaper_path}" -s -t &
+	# execute wallust skipping tty and terminal changes
+	wallust run -s "${wallpaper_path}" &
 }

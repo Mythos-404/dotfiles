@@ -10,3 +10,6 @@ README
 history.*
 
 .current_wallpaper
+
+# swaync
+.config/swaync/style.css

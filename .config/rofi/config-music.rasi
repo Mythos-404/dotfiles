@@ -5,7 +5,7 @@ configuration {
 
 /*****----- Global Properties -----*****/
 @import                          "shared/fonts.rasi"
-@import                          "pywal-color/pywal-colors.rasi"
+@import                          "wallust-color/colors.rasi"
 * {
     background-alt: #1e2031;
 }

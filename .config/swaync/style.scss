@@ -1,4 +1,4 @@
-@import url("../../.cache/wal/colors-waybar.css");
+@import url("../../.cache/wallust/templates/colors-waybar.css");
 
 @define-color noti-border-color @color2;
 @define-color noti-bg rgba(0, 0, 0, 0.8);
@@ -18,333 +18,333 @@ $text-color-alt: #{"@text-color-alt"};
 $text-color-disabled: #{"@text-color-disabled"};
 
 * {
-    font-family: "IosevkaCustomForMythos_404";
-    font-weight: bold;
+  font-family: "IosevkaCustomForMythos_404";
+  font-weight: bold;
 }
 
 .control-center {
-    background: $noti-bg;
-    border: 2px solid $noti-border-color;
-    color: $text-color;
-    border-radius: 10px;
+  background: $noti-bg;
+  border: 2px solid $noti-border-color;
+  color: $text-color;
+  border-radius: 10px;
 
-    &-list {
-        background: transparent;
-    }
+  &-list {
+    background: transparent;
+  }
 
-    &-list-placeholder {
-        opacity: 0.5;
-    }
+  &-list-placeholder {
+    opacity: 0.5;
+  }
 
-    .notification-row {
-        &:focus,
-        &:hover {
-            opacity: 1;
-            background: $noti-bg;
-            border-radius: 10px;
-        }
+  .notification-row {
+    &:focus,
+    &:hover {
+      opacity: 1;
+      background: $noti-bg;
+      border-radius: 10px;
     }
+  }
 }
 
 .notification {
+  border-radius: 10px;
+
+  &-row {
+    outline: none;
+    margin: 0px;
+  }
+
+  &-content {
+    color: $text-color;
+    background: $noti-bg;
+    padding: 3px 10px 3px 6px;
+    border-radius: 10px;
+    border: 2px solid $noti-border-color;
+    margin: 0px;
+  }
+
+  &-action {
+    border: 2px solid $noti-border-color;
+    border-top: none;
     border-radius: 10px;
 
-    &-row {
-        outline: none;
-        margin: 0px;
+    &:first-child {
+      border-bottom-left-radius: 10px;
+      background: #1b1b2b;
     }
 
-    &-content {
-        color: $text-color;
-        background: $noti-bg;
-        padding: 3px 10px 3px 6px;
-        border-radius: 10px;
-        border: 2px solid $noti-border-color;
-        margin: 0px;
+    &:last-child {
+      border-bottom-left-radius: 10px;
+      background: #1b1b2b;
     }
+  }
 
-    &-action {
-        border: 2px solid $noti-border-color;
-        border-top: none;
-        border-radius: 10px;
+  &-default-action {
+    border-radius: 10px;
+    margin: 5px;
 
-        &:first-child {
-            border-bottom-left-radius: 10px;
-            background: #1b1b2b;
-        }
-
-        &:last-child {
-            border-bottom-left-radius: 10px;
-            background: #1b1b2b;
-        }
+    &:not(:only-child) {
+      border-bottom-left-radius: 7px;
+      border-bottom-right-radius: 7px;
     }
+  }
 
-    &-default-action {
-        border-radius: 10px;
-        margin: 5px;
-
-        &:not(:only-child) {
-            border-bottom-left-radius: 7px;
-            border-bottom-right-radius: 7px;
-        }
-    }
-
-    &-default-action:hover,
-    &-action:hover {
-        color: $text-color;
-        background: #{"@color1"};
-    }
+  &-default-action:hover,
+  &-action:hover {
+    color: $text-color;
+    background: #{"@color1"};
+  }
 }
 
 .close-button {
-    background: #f7768e;
-    color: $noti-bg;
-    text-shadow: none;
-    padding: 0;
-    border-radius: 10px;
-    margin-top: 5px;
-    margin-right: 5px;
+  background: #f7768e;
+  color: $noti-bg;
+  text-shadow: none;
+  padding: 0;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-right: 5px;
 
-    &:hover {
-        box-shadow: none;
-        background: #f7768e;
-        transition: all 0.15s ease-in-out;
-        border: none;
-    }
+  &:hover {
+    box-shadow: none;
+    background: #f7768e;
+    transition: all 0.15s ease-in-out;
+    border: none;
+  }
 }
 
 .inline-reply {
-    &-entry {
-        background: $noti-bg;
-        color: $text-color;
-        caret-color: $text-color;
-        border: 1px solid $noti-border-color;
-        border-radius: 10px;
+  &-entry {
+    background: $noti-bg;
+    color: $text-color;
+    caret-color: $text-color;
+    border: 1px solid $noti-border-color;
+    border-radius: 10px;
+  }
+
+  &-button {
+    font-size: 0.5rem;
+    margin-left: 4px;
+    background: $noti-bg;
+    border: 1px solid $noti-border-color;
+    border-radius: 10px;
+    color: $text-color;
+
+    &:disabled {
+      background: initial;
+      color: $text-color-disabled;
+      border: 1px solid transparent;
     }
 
-    &-button {
-        font-size: 0.5rem;
-        margin-left: 4px;
-        background: $noti-bg;
-        border: 1px solid $noti-border-color;
-        border-radius: 10px;
-        color: $text-color;
-
-        &:disabled {
-            background: initial;
-            color: $text-color-disabled;
-            border: 1px solid transparent;
-        }
-
-        &:hover {
-            background: $noti-bg-hover;
-        }
+    &:hover {
+      background: $noti-bg-hover;
     }
+  }
 }
 
 .widget {
+  &-title {
+    color: $noti-border-color;
+    background: $noti-bg-alt;
+    padding: 3px 6px;
+    margin: 5px;
+    font-size: 1rem;
+    border-radius: 10px;
+
+    & > button {
+      font-size: 0.75rem;
+      color: $text-color;
+      border-radius: 10px;
+      background: transparent;
+      border: 0.5px solid $noti-border-color;
+
+      &:hover {
+        background: #f7768e;
+        color: $noti-border-color;
+      }
+    }
+  }
+
+  &-dnd {
+    background: $noti-bg-alt;
+    padding: 3px 6px;
+    margin: 5px;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: $noti-border-color;
+
+    & > switch {
+      border-radius: 10px;
+      background: $noti-border-color;
+
+      & slider {
+        background: $noti-bg;
+        border-radius: 10px;
+      }
+
+      &:checked {
+        background: #f7768e;
+        border: 1px solid #f7768e;
+
+        & slider {
+          background: $noti-bg;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+
+  &-label {
+    margin: 5px;
+
+    & > label {
+      font-size: 1rem;
+      color: $text-color;
+    }
+  }
+
+  &-mpris {
+    color: $text-color;
+    background: $noti-bg-alt;
+    padding: 3px 6px;
+    margin: 5px;
+    border-radius: 10px;
+
+    & > box > button {
+      border-radius: 10px;
+    }
+
+    &-player {
+      padding: 3px 6px;
+      margin: 5px;
+    }
+
     &-title {
-        color: $noti-border-color;
-        background: $noti-bg-alt;
-        padding: 3px 6px;
-        margin: 5px;
-        font-size: 1rem;
-        border-radius: 10px;
-
-        & > button {
-            font-size: 0.75rem;
-            color: $text-color;
-            border-radius: 10px;
-            background: transparent;
-            border: 0.5px solid $noti-border-color;
-
-            &:hover {
-                background: #f7768e;
-                color: $noti-border-color;
-            }
-        }
+      font-weight: normal;
+      font-size: 1rem;
     }
 
-    &-dnd {
-        background: $noti-bg-alt;
-        padding: 3px 6px;
-        margin: 5px;
-        border-radius: 10px;
-        font-size: 1rem;
-        color: $noti-border-color;
-
-        & > switch {
-            border-radius: 10px;
-            background: $noti-border-color;
-
-            & slider {
-                background: $noti-bg;
-                border-radius: 10px;
-            }
-
-            &:checked {
-                background: #f7768e;
-                border: 1px solid #f7768e;
-
-                & slider {
-                    background: $noti-bg;
-                    border-radius: 10px;
-                }
-            }
-        }
+    &-subtitle {
+      font-size: 0.75rem;
     }
+  }
 
-    &-label {
-        margin: 5px;
+  &-buttons-grid {
+    font-size: large;
+    color: $noti-border-color;
+    padding: 2px;
+    margin: 5px;
+    border-radius: 10px;
+    background: $noti-bg-alt;
 
-        & > label {
-            font-size: 1rem;
-            color: $text-color;
-        }
+    & > flowbox > flowboxchild > button {
+      margin: 1px;
+      background: $noti-bg;
+      border-radius: 10px;
+      color: $text-color;
+
+      &:hover {
+        background: rgba(122, 162, 247, 0.1);
+        color: $text-color-alt;
+      }
     }
+  }
 
-    &-mpris {
-        color: $text-color;
-        background: $noti-bg-alt;
-        padding: 3px 6px;
-        margin: 5px;
-        border-radius: 10px;
+  &-menubar > box > .menu-button-bar > button {
+    border: none;
+    background: transparent;
+  }
 
-        & > box > button {
-            border-radius: 10px;
-        }
+  &-backlight {
+    background: $noti-bg-alt;
+    padding: 5px;
+    margin: 10px 10px 5px 10px;
+    border-radius: 10px;
+    font-size: x-large;
+    color: $text-color;
+  }
 
-        &-player {
-            padding: 3px 6px;
-            margin: 5px;
-        }
+  &-volume {
+    background: $noti-bg-alt;
+    padding: 2px;
+    margin: 10px 10px 5px 10px;
+    border-radius: 10px;
+    font-size: x-large;
+    color: $text-color;
 
-        &-title {
-            font-weight: normal;
-            font-size: 1rem;
-        }
-
-        &-subtitle {
-            font-size: 0.75rem;
-        }
+    & > box > button {
+      background: #7aa2f7;
+      border: none;
     }
-
-    &-buttons-grid {
-        font-size: large;
-        color: $noti-border-color;
-        padding: 2px;
-        margin: 5px;
-        border-radius: 10px;
-        background: $noti-bg-alt;
-
-        & > flowbox > flowboxchild > button {
-            margin: 1px;
-            background: $noti-bg;
-            border-radius: 10px;
-            color: $text-color;
-
-            &:hover {
-                background: rgba(122, 162, 247, 0.1);
-                color: $text-color-alt;
-            }
-        }
-    }
-
-    &-menubar > box > .menu-button-bar > button {
-        border: none;
-        background: transparent;
-    }
-
-    &-backlight {
-        background: $noti-bg-alt;
-        padding: 5px;
-        margin: 10px 10px 5px 10px;
-        border-radius: 10px;
-        font-size: x-large;
-        color: $text-color;
-    }
-
-    &-volume {
-        background: $noti-bg-alt;
-        padding: 2px;
-        margin: 10px 10px 5px 10px;
-        border-radius: 10px;
-        font-size: x-large;
-        color: $text-color;
-
-        & > box > button {
-            background: #7aa2f7;
-            border: none;
-        }
-    }
+  }
 }
 
 .floating-notifications {
-    background: transparent;
+  background: transparent;
 }
 
 .blank-window {
-    background: #{"alpha(black, 0.1)"};
+  background: #{"alpha(black, 0.1)"};
 }
 
 .body-image {
-    margin-top: 6px;
-    color: $text-color-alt;
-    border-radius: 10px;
+  margin-top: 6px;
+  color: $text-color-alt;
+  border-radius: 10px;
 }
 
 .summary {
-    font-size: 1rem;
-    font-weight: bold;
-    background: transparent;
-    color: $text-color-alt;
-    text-shadow: none;
+  font-size: 1rem;
+  font-weight: bold;
+  background: transparent;
+  color: $text-color-alt;
+  text-shadow: none;
 }
 
 .time {
-    font-size: 1rem;
-    font-weight: bold;
-    background: transparent;
-    color: $text-color;
-    text-shadow: none;
-    margin-right: 18px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: transparent;
+  color: $text-color;
+  text-shadow: none;
+  margin-right: 18px;
 }
 
 .body {
-    font-size: 1rem;
-    font-weight: bold;
-    background: transparent;
-    color: $text-color;
-    text-shadow: none;
+  font-size: 1rem;
+  font-weight: bold;
+  background: transparent;
+  color: $text-color;
+  text-shadow: none;
 }
 
 .low {
-    background: $text-color;
-    padding: 0px;
-    border-radius: 10px;
+  background: $text-color;
+  padding: 0px;
+  border-radius: 10px;
 }
 
 .normal {
-    background: $text-color;
-    padding: 0px;
-    border-radius: 10px;
+  background: $text-color;
+  padding: 0px;
+  border-radius: 10px;
 }
 
 .critical {
-    background: red;
-    padding: 0px;
-    border-radius: 10px;
+  background: red;
+  padding: 0px;
+  border-radius: 10px;
 }
 
 .topbar-buttons > button {
-    border: none;
-    background: transparent;
+  border: none;
+  background: transparent;
 }
 
 .per-app-volume {
-    background-color: $noti-bg;
-    padding: 4px 8px 8px;
-    margin: 0 8px 8px;
-    border-radius: 10px;
-    color: $text-color;
+  background-color: $noti-bg;
+  padding: 4px 8px 8px;
+  margin: 0 8px 8px;
+  border-radius: 10px;
+  color: $text-color;
 }

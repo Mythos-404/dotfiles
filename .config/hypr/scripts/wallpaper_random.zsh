@@ -18,7 +18,7 @@ unset IFS
 swww query || swww init && swwww_set_image $RANDOM_PIC
 
 sleep 0.5
-"${USER_SCRIPTS}"/pywal_swww.zsh
+"${USER_SCRIPTS}"/wallust_swww.zsh
 sleep 0.2
 "${USER_SCRIPTS}"/refresh_app.zsh
 sleep 0.5
