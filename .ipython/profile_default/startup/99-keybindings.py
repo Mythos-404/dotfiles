@@ -11,10 +11,4 @@ def switch_to_navigation_mode(event):
     vi_state.input_mode = InputMode.NAVIGATION
 
 
-if getattr(ip, "pt_app", None):
-    registry = ip.pt_app.key_bindings
-    registry.add_binding("j", "k", filter=(HasFocus(DEFAULT_BUFFER) & ViInsertMode()))(
-        switch_to_navigation_mode
-    )
-
 del ip, switch_to_navigation_mode
