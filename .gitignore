@@ -13,3 +13,5 @@ history.*
 
 # swaync
 .config/swaync/style.css
+
+pid
