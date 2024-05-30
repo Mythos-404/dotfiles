@@ -66,7 +66,7 @@ main() {
 		}
 	}
 
-	if [[ $pic_index -ne -1 ]] {
+	if [[ $pic_index != -1 ]] {
 		swwww_set_image "${PICS[$pic_index]}"
 	} else {
 		echo "Image not found."

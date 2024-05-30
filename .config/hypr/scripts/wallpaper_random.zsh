@@ -5,7 +5,7 @@ USER_SCRIPTS="$HOME/.config/hypr/scripts"
 WALL_DIR="$HOME/Pictures/wallpapers"
 
 # Transition config
-FPS=144
+FPS=150
 TYPE="any"
 DURATION=3
 swwww_set_image() { swww img --transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION $1 }
