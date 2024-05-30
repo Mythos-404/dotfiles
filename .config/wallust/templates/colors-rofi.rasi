@@ -1,33 +1,30 @@
-* {{ "{" }}
-    border-colour:               var(selected);
-    handle-colour:               var(selected);
-    background-colour:           var(background);
-    foreground-colour:           var(foreground);
-    alternate-background:        var(background-alt);
-    normal-background:           var(background);
-    normal-foreground:           var(foreground);
-    urgent-background:           var(urgent);
-    urgent-foreground:           var(background);
-    active-background:           var(active);
-    active-foreground:           var(background);
-    selected-normal-background:  var(selected);
-    selected-normal-foreground:  var(background);
-    selected-urgent-background:  var(active);
-    selected-urgent-foreground:  var(background);
-    selected-active-background:  var(urgent);
-    selected-active-foreground:  var(background);
-    alternate-normal-background: var(background);
-    alternate-normal-foreground: var(foreground);
-    alternate-urgent-background: var(urgent);
-    alternate-urgent-foreground: var(background);
-    alternate-active-background: var(active);
-    alternate-active-foreground: var(background);
+* {
+	active-background: {{color9}};
+	active-foreground: {{foreground}};
 
-    background:     rgba(0,0,0,0.4);
-    background-alt: rgba(0,0,0,0);
-    foreground:     {{foreground}};
-    active:         {{color1}};
-    selected:       {{color2}};
-    urgent:         {{color3}};
-    border:         {{color4}};
-{{ "}" }}
+	normal-background: {{background}};
+	normal-foreground: {{foreground}};
+
+	urgent-background: {{color12}};
+	urgent-foreground: {{foreground}};
+
+	alternate-active-background: {{color5}};
+	alternate-active-foreground: {{foreground}};
+	alternate-normal-background: {{background}};
+	alternate-normal-foreground: {{foreground}};
+	alternate-urgent-background: {{background}};
+	alternate-urgent-foreground: {{foreground}};
+
+	selected-active-background: {{color9}};
+	selected-active-foreground: {{foreground}};
+	selected-normal-background: {{color7}};
+	selected-normal-foreground: {{foreground}};
+	selected-urgent-background: {{color12}};
+	selected-urgent-foreground: {{foreground}};
+
+	background-color: rgba(0,0,0,0.3);
+	background-alt: rgba(0,0,0,0);
+	background: rgba(0,0,0,0.5);
+	foreground: {{color15}};
+	border-color: {{color9}};
+}
