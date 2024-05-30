@@ -10,11 +10,12 @@ import time
 from functools import *  # noqa
 from itertools import *  # noqa
 
+import more_itertools as mi  # noqa
 import orjson as json
 import tqdm as tq
-from more_itertools import *  # noqa
+from funcy import *  # noqa
 from rich import inspect, print
-from tqdm import tqdm
+from tqdm.rich import tqdm
 
 # -------------- Useful Macros -----------------------------------------
 ip = get_ipython()  # noqa
