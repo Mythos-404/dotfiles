@@ -12,20 +12,20 @@
     "margin-right": 8,
 
     "modules-left": [
-        "hyprland/workspaces#pacman",
+        "custom/weather",
         "custom/separator#dot-line",
         "group/motherboard",
         "custom/separator#dot-line",
-        "custom/weather",
+        "tray"
     ],
-    "modules-center": ["clock"],
+    "modules-center": ["hyprland/workspaces#pacman", "custom/separator#dot-line", "custom/swaync"],
     "modules-right": [
-        "tray",
+        "clock",
         "custom/separator#dot-line",
         "network#speed",
         "custom/separator#dot-line",
         "group/audio",
         "custom/separator#dot-line",
-        "battery",
-    ],
+        "battery"
+    ]
 }

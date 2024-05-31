@@ -1,6 +1,3 @@
-/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-/* Catppuccin Mocha */
-
 * {
     font-family: "IosevkaCustomForMythos_404";
     font-weight: bold;
@@ -64,6 +61,7 @@ window#waybar.hidden {
 #mode,
 #mpris,
 #network,
+#power-profiles-daemon,
 #pulseaudio,
 #pulseaudio-slider,
 #taskbar button,
@@ -75,7 +73,7 @@ window#waybar.hidden {
 #workspaces,
 #custom-backlight,
 #custom-cycle_wall,
-#custom-keybinds,
+#custom-hint,
 #custom-keyboard,
 #custom-light_dark,
 #custom-lock,
@@ -103,6 +101,10 @@ window#waybar.hidden {
 
 #idle_inhibitor {
     color: @blue;
+}
+
+#custom-swaync {
+    color: @mauve;
 }
 
 #bluetooth,
