@@ -24,9 +24,9 @@ sleep 0.5
 swaync >/dev/null 2>&1 &
 
 # Relaunching rainbow borders if the script exists
-sleep 1
-if (file_exists "$USER_SCRIPTS/rainbow_borders.zsh") {
-	"$USER_SCRIPTS"/rainbow_borders.zsh &
-}
+# sleep 1
+# if (file_exists "$USER_SCRIPTS/rainbow_borders.zsh") {
+# 	"$USER_SCRIPTS"/rainbow_borders.zsh &
+# }
 
 exit 0
