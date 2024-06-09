@@ -8,5 +8,7 @@ def_key "ctrl-j"
 def_key "ctrl-k"
   move_selected_items_up
 
-def_key "space"
- play_item
+def_key "="
+  volume_up
+def_key "-"
+  volume_down
