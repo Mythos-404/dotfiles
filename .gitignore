@@ -15,3 +15,5 @@ history.*
 .config/swaync/style.css
 
 pid
+
+mpd.db
