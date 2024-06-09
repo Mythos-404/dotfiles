@@ -322,7 +322,7 @@
     "tray": {
         "icon-size": 17,
         "spacing": 4,
-        "reverse-direction": true
+        "reverse-direction": false
     },
 
     "wireplumber": {
