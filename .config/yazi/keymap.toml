@@ -26,15 +26,15 @@ prepend_keymap = [
     # plugin
 
     # bookmarks
-    { on = [ "m" ],      run = "plugin bookmarks --args=save",            desc = "Save current position as a bookmark"}, 
-	{ on = [ "'" ],      run = "plugin bookmarks --args=jump",            desc = "Jump to a bookmark" },
-	{ on = [ "b", "d" ], run = "plugin bookmarks --args=delete",          desc = "Delete a bookmark"}, 
-	{ on = [ "b", "D" ], run = "plugin bookmarks --args=delete_all",      desc = "Delete all bookmarks"}, 
+    { on = [ "m" ],      run = "plugin bookmarks-persistence --args=save",            desc = "Save current position as a bookmark"}, 
+    { on = [ "'" ],      run = "plugin bookmarks-persistence --args=jump",            desc = "Jump to a bookmark" },
+    { on = [ "b", "d" ], run = "plugin bookmarks-persistence --args=delete",          desc = "Delete a bookmark"}, 
+    { on = [ "b", "D" ], run = "plugin bookmarks-persistence --args=delete_all",      desc = "Delete all bookmarks"}, 
 
     # heyjump
-    { on = [ "i" ], run = "plugin keyjump --args='global once'", desc = "Keyjump (Normal mode)"},
-    { on = [ "I" ], run = "plugin keyjump --args='global'",      desc = "Keyjump (Global mode)"},
-    
+    { on = [ "i" ], run = "plugin searchjump",                 desc = "Search jump"},
+    { on = [ "I" ], run = "plugin searchjump --args='autocd'", desc = "Search jump (autocd)"},
+
     # smart-enter
     { on = [ "l" ], run =  "plugin --sync smart-enter", desc = "Enter the child directory, or open the file"},
 
