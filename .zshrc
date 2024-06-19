@@ -188,6 +188,9 @@ zvm_after_lazy_keybindings() {
 
 zvm_after_init_commands+=(cli_init autopair-init init_fzf_binds)
 
+# zsh-autosuggestions
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+
 # fzf
 zstyle ':completion:*' extra-verbose true
 zstyle ':fzf-tab:*' prefix ''
