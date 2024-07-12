@@ -17,64 +17,63 @@ local SUPPORTED_KEYS = {
 local LINUX_BASE_PATH = "/.cache/yazi/bookmarkcache"
 local WINDOWS_BASE_PATH = "\\yazi\\config\\plugins\\bookmarks-persistence.yazi\\bookmarkcache"
 
-local SERIALIZE_PATH = ya.target_family() == "windows" and os.getenv("APPDATA") .. WINDOWS_BASE_PATH or os.getenv("HOME") .. LINUX_BASE_PATH
+local SERIALIZE_PATH = ya.target_family() == "windows" and os.getenv("APPDATA") .. WINDOWS_BASE_PATH
+	or os.getenv("HOME") .. LINUX_BASE_PATH
 
-local function string_split(input,delimiter)
-
+local function string_split(input, delimiter)
 	local result = {}
 
-	for match in (input..delimiter):gmatch("(.-)"..delimiter) do
-	        table.insert(result, match)
+	for match in (input .. delimiter):gmatch("(.-)" .. delimiter) do
+		table.insert(result, match)
 	end
 	return result
 end
 
 local function delete_lines_by_content(file_path, pattern)
-    local lines = {}
-    local file = io.open(file_path, "r")
+	local lines = {}
+	local file = io.open(file_path, "r")
 
-    -- Read all lines and store those that do not match the pattern
-    for line in file:lines() do
-        if not line:find(pattern) then
-            table.insert(lines, line)
-        end
-    end
-    file:close()
+	-- Read all lines and store those that do not match the pattern
+	for line in file:lines() do
+		if not line:find(pattern) then
+			table.insert(lines, line)
+		end
+	end
+	file:close()
 
-    -- Write back the lines that don't match the pattern
-    file = io.open(file_path, "w")
-    for i, line in ipairs(lines) do
-        file:write(line .. "\n")
-    end
-    file:close()
+	-- Write back the lines that don't match the pattern
+	file = io.open(file_path, "w")
+	for i, line in ipairs(lines) do
+		file:write(line .. "\n")
+	end
+	file:close()
 end
 
 -- save table to file
-local save_to_file = ya.sync(function(state,filename)
-    local file = io.open(filename, "w+")
+local save_to_file = ya.sync(function(state, filename)
+	local file = io.open(filename, "w+")
 	for i, f in ipairs(state.bookmarks) do
-		file:write(string.format("%s###%s###%s###%s",f.on,f.file_url,f.desc,f.isdir), "\n")
+		file:write(string.format("%s###%s###%s###%s", f.on, f.file_url, f.desc, f.isdir), "\n")
 	end
-    file:close()
+	file:close()
 end)
 
 -- load from file to state
-local load_file_to_state = ya.sync(function(state,filename)
-
-	if state.bookmarks == nil then 
+local load_file_to_state = ya.sync(function(state, filename)
+	if state.bookmarks == nil then
 		state.bookmarks = {}
 	else
 		return
 	end
 
-    local file = io.open(filename, "r")
-	if file == nil then 
+	local file = io.open(filename, "r")
+	if file == nil then
 		return
 	end
 
 	for line in file:lines() do
 		line = line:gsub("[\r\n]", "")
-		local bookmark = string_split(line,"###")
+		local bookmark = string_split(line, "###")
 		if bookmark == nil or #bookmark < 4 then
 			goto nextline
 		end
@@ -87,19 +86,17 @@ local load_file_to_state = ya.sync(function(state,filename)
 
 		::nextline::
 	end
-    file:close()
+	file:close()
 end)
 
-
-
-local save_bookmark = ya.sync(function(state,message,key)
+local save_bookmark = ya.sync(function(state, message, key)
 	local folder = Folder:by_kind(Folder.CURRENT)
 	local under_cursor_file = folder.window[folder.cursor - folder.offset + 1]
 
 	-- avoid add exists url
 	for y, cand in ipairs(state.bookmarks) do
 		if tostring(under_cursor_file.url) == cand.desc then
-			return 
+			return
 		end
 	end
 
@@ -115,48 +112,49 @@ local save_bookmark = ya.sync(function(state,message,key)
 		isdir = tostring(under_cursor_file.cha.is_dir),
 	}
 
-	ya.notify {
+	ya.notify({
 		title = "Bookmark",
-		content = "Bookmark:<"..message.."> saved",
+		content = "Bookmark:<" .. message .. "> saved",
 		timeout = 2,
 		level = "info",
-	}
+	})
 
 	save_to_file(SERIALIZE_PATH)
 end)
 
-local all_bookmarks = ya.sync(function(state) return state.bookmarks or {} end)
+local all_bookmarks = ya.sync(function(state)
+	return state.bookmarks or {}
+end)
 
-local delete_bookmark = ya.sync(function(state,idx) 
-	ya.notify {
+local delete_bookmark = ya.sync(function(state, idx)
+	ya.notify({
 		title = "Bookmark",
-		content = "Bookmark:<"..state.bookmarks[idx].desc .."> deleted",
+		content = "Bookmark:<" .. state.bookmarks[idx].desc .. "> deleted",
 		timeout = 2,
 		level = "info",
-	}
-	delete_lines_by_content(SERIALIZE_PATH,string.format("%s###",state.bookmarks[idx].on))
-	table.remove(state.bookmarks, idx) 
+	})
+	delete_lines_by_content(SERIALIZE_PATH, string.format("%s###", state.bookmarks[idx].on))
+	table.remove(state.bookmarks, idx)
 end)
 
 local delete_all_bookmarks = ya.sync(function(state)
-	ya.notify {
+	ya.notify({
 		title = "Bookmark",
 		content = "Bookmark:all bookmarks has been deleted",
 		timeout = 2,
 		level = "info",
-	}
+	})
 	state.bookmarks = nil
-	delete_lines_by_content(SERIALIZE_PATH,".*")
+	delete_lines_by_content(SERIALIZE_PATH, ".*")
 end)
 
-
 local function keyset_notify(str)
-	ya.notify {
+	ya.notify({
 		title = "keyset",
 		content = str,
 		timeout = 2,
 		level = "info",
-	}	
+	})
 end
 
 local auto_generate_key = ya.sync(function(state)
@@ -170,15 +168,15 @@ local auto_generate_key = ya.sync(function(state)
 
 		for y, cand in ipairs(state.bookmarks) do
 			if key == cand.on then
-				goto continue				
+				goto continue
 			end
 		end
-		
+
 		auto_assign_key = key
 		find = true
 
 		::continue::
-	end	
+	end
 
 	if find then
 		return auto_assign_key
@@ -188,19 +186,18 @@ local auto_generate_key = ya.sync(function(state)
 	end
 end)
 
-local assign_key =ya.sync(function(state,input_key)
-
+local assign_key = ya.sync(function(state, input_key)
 	if string.len(input_key) > 1 then
 		keyset_notify("assign fail,key too long")
-		return nil 
+		return nil
 	end
 
 	for y, cand in ipairs(state.bookmarks) do
 		if input_key == cand.on then
 			keyset_notify("assign fail,key has been used")
-			return nil 				
+			return nil
 		end
-	end		
+	end
 	return input_key
 end)
 
@@ -226,7 +223,7 @@ local function get_bind_key()
 end
 
 return {
-	entry = function(_,args)
+	entry = function(_, args)
 		local action = args[1]
 		if not action then
 			return
@@ -245,7 +242,7 @@ return {
 				if key == nil then
 					return
 				end
-				save_bookmark(value,key)
+				save_bookmark(value, key)
 			end
 			return
 		end
@@ -254,15 +251,14 @@ return {
 			return delete_all_bookmarks()
 		end
 
-
 		if action == "jump" then
 			local bookmarks = all_bookmarks()
-			
+
 			if #bookmarks == 0 then
 				return
 			end
 
-			local selected = ya.which { cands = bookmarks }
+			local selected = ya.which({ cands = bookmarks })
 
 			if selected == nil then
 				return
@@ -278,12 +274,12 @@ return {
 				return
 			end
 
-			local selected = ya.which { cands = bookmarks }
-			
+			local selected = ya.which({ cands = bookmarks })
+
 			if selected == nil then
 				return
 			end
-			
+
 			delete_bookmark(selected)
 			return
 		end

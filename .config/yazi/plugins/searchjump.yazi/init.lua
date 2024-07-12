@@ -56,18 +56,12 @@ local function get_match_position(name, find_str)
 	local startp, endp
 	local convert_name = ""
 	local convert_find_str = ""
-	local zh_to_en
 	name = string.lower(name)
 
 	-- change chiese char to en char with "##" as marker
 	for ch in string.gmatch(name, "[%z\1-\127\194-\244][\128-\191]*") do
-		if ch:byte() > 127 then
-			zh_to_en = CH_TABLE[ch]
-			if zh_to_en then
-				convert_name = convert_name .. string.upper(zh_to_en) .. "##"
-			else
-				convert_name = convert_name .. ch
-			end
+		if ch:byte() > 127 and CH_TABLE[ch] then
+			convert_name = convert_name .. string.upper(CH_TABLE[ch]) .. "##"
 		else
 			convert_name = convert_name .. ch
 		end
@@ -124,6 +118,18 @@ local function get_match_position(name, find_str)
 	end
 end
 
+local get_first_match_lable = ya.sync(function(state)
+	if state.match == nil then
+		return nil
+	end
+
+	for url, _ in pairs(state.match) do
+		return #state.match[url].key > 0 and state.match[url].key[1] or nil
+	end
+
+	return nil
+end)
+
 -- apply search result to show
 local set_match_lable = ya.sync(function(state, url, name, file)
 	local span = {}
@@ -142,11 +148,15 @@ local set_match_lable = ya.sync(function(state, url, name, file)
 		table.insert(span, ui.Span(name:sub(1, startPos[1] - 1)):fg(state.opt_unmatch_fg))
 	end
 
+	local match_str_fg
+	local match_str_bg
+	local first_match_lable = get_first_match_lable()
+
 	while i <= #startPos do
-		table.insert(
-			span,
-			ui.Span(name:sub(startPos[i], endPos[i])):fg(state.opt_match_str_fg):bg(state.opt_match_str_bg)
-		)
+		match_str_fg = key[i] == first_match_lable and state.opt_first_match_str_fg or state.opt_match_str_fg
+		match_str_bg = key[i] == first_match_lable and state.opt_first_match_str_bg or state.opt_match_str_bg
+
+		table.insert(span, ui.Span(name:sub(startPos[i], endPos[i])):fg(match_str_fg):bg(match_str_bg))
 		if i <= #key then
 			table.insert(span, ui.Span(key[i]):fg(state.opt_lable_fg):bg(state.opt_lable_bg))
 		end
@@ -170,34 +180,38 @@ local set_match_lable = ya.sync(function(state, url, name, file)
 end)
 
 -- update the match data after input a str
-local update_match_table = ya.sync(function(state, folder, find_str)
+local update_match_table = ya.sync(function(state, pane, folder, convert_pattern)
 	if not folder then
 		return
 	end
 
 	local i
-
-	for _, file in ipairs(folder.window) do
+	for i, file in ipairs(folder.window) do
 		local name = file.name:gsub("\r", "?", 1)
 		local url = tostring(file.url)
-		local startPos, endPos, convert_name = get_match_position(name, find_str)
+		local next_char = ""
+		local startPos, endPos, convert_name = get_match_position(name, convert_pattern)
 		if startPos then
+			-- record match file data
 			state.match[url] = {
 				key = {},
 				startPos = startPos,
 				endPos = endPos,
 				isdir = file.cha.is_dir,
+				pane = pane,
+				cursorPos = i,
 			}
 			i = 1
 			while i <= #startPos do -- the next char of match string can't be used as lable for supporing further search
-				state.next_char[#state.next_char + 1] = string.lower(convert_name:sub(endPos[i] + 1, endPos[i] + 1))
+				next_char = string.lower(convert_name:sub(endPos[i] + 1, endPos[i] + 1))
+				state.next_char[next_char] = ""
 				i = i + 1
 			end
 		end
 	end
 end)
 
-local record_match_file = ya.sync(function(state, patterns)
+local record_match_file = ya.sync(function(state, patterns, re_match)
 	local exist_match = false
 
 	if state.match == nil then
@@ -208,53 +222,44 @@ local record_match_file = ya.sync(function(state, patterns)
 		state.next_char = {}
 	end
 
-	local zh_to_en = ""
 	local covert_parttern
 
 	for _, pattern in ipairs(patterns) do
 		covert_parttern = ""
 		-- change chiese char to en char with "##" as marker
 		for ch in string.gmatch(pattern, "[%z\1-\127\194-\244][\128-\191]*") do
-			if ch:byte() > 127 then
-				zh_to_en = CH_TABLE[ch]
-				if zh_to_en then
-					covert_parttern = covert_parttern .. string.upper(zh_to_en) .. "##"
-				else
-					covert_parttern = covert_parttern .. string.lower(ch)
-				end
+			if ch:byte() > 127 and CH_TABLE[ch] then
+				covert_parttern = covert_parttern .. string.upper(CH_TABLE[ch]) .. "##"
+			elseif ch == "." and not re_match then
+				covert_parttern = covert_parttern .. "[.]"
 			else
 				covert_parttern = covert_parttern .. string.lower(ch)
 			end
 		end
 
 		-- record match file from current window
-		update_match_table(Folder:by_kind(Folder.CURRENT), covert_parttern)
+		update_match_table("current", Folder:by_kind(Folder.CURRENT), covert_parttern)
 
-		-- record match file from parent window
 		if not state.opt_only_current then
-			update_match_table(Folder:by_kind(Folder.PARENT), covert_parttern)
-		end
-
-		-- record match file from preview window
-		if not state.opt_only_current then
-			update_match_table(Folder:by_kind(Folder.PREVIEW), covert_parttern)
+			-- record match file from parent window
+			update_match_table("parent", Folder:by_kind(Folder.PARENT), covert_parttern)
+			-- record match file from preview window
+			update_match_table("preview", Folder:by_kind(Folder.PREVIEW), covert_parttern)
 		end
 	end
 
 	-- get valid key list (KEYS_LABLE but exclude state.next_char table)
 	local valid_lable = {}
 	for _, value in ipairs(KEYS_LABLE) do
-		local found = false
-		for _, v in ipairs(state.next_char) do
-			if string.lower(value) == v then
-				found = true
-				break
-			end
+		if not state.opt_enable_capital_lable and string.byte(value) > 64 and string.byte(value) < 91 then
+			goto nextlable
 		end
 
-		if not found then
+		if state.next_char[string.lower(value)] == nil then
 			table.insert(valid_lable, value)
 		end
+
+		::nextlable::
 	end
 
 	-- assign valid key to each match file
@@ -271,7 +276,9 @@ local record_match_file = ya.sync(function(state, patterns)
 	end
 
 	-- flush page
-	ya.manager_emit("peek", { force = true })
+	if Folder:by_kind(Folder.PREVIEW) then
+		ya.manager_emit("peek", { force = true })
+	end
 	ya.render()
 
 	return exist_match
@@ -280,14 +287,16 @@ end)
 local toggle_ui = ya.sync(function(st)
 	if st.highlights or st.mode then
 		File.highlights, Status.mode, st.highlights, st.mode = st.highlights, st.mode, nil, nil
-		ya.manager_emit("peek", { force = true })
+		if Folder:by_kind(Folder.PREVIEW) then
+			ya.manager_emit("peek", { force = true })
+		end
 		ya.render()
 		return
 	end
 
 	st.highlights, st.mode = File.highlights, Status.mode
 
-	File.highlights = function(self, file)
+	File.highlights = function(_, file)
 		local span = {}
 		local name = file.name:gsub("\r", "?", 1)
 
@@ -306,34 +315,51 @@ local toggle_ui = ya.sync(function(st)
 
 	Status.mode = function(self)
 		local style = self.style()
+		local match_pattern = (st.match_pattern and st.opt_show_search_in_statusbar) and ":" .. st.match_pattern or ""
 		return ui.Line({
 			ui.Span(THEME.status.separator_open):fg(style.bg),
-			ui.Span(" SJ-" .. tostring(cx.active.mode):upper() .. " "):style(style),
+			ui.Span(" SJ-" .. tostring(cx.active.mode):upper() .. match_pattern .. " "):style(style),
 		})
 	end
 
-	ya.manager_emit("peek", { force = true })
+	if Folder:by_kind(Folder.PREVIEW) then
+		ya.manager_emit("peek", { force = true })
+	end
 end)
 
-local set_target_str = ya.sync(function(state, patterns, final_input_str)
-	local is_match_key = false
-	local found = false
-	if state.match then
-		for url, _ in pairs(state.match) do
-			for _, value in ipairs(state.match[url].key) do
-				if value == final_input_str then
-					found = true
-					break
-				end
-			end
+local check_key_is_lable = ya.sync(function(state, final_input_str)
+	if state.backouting then
+		state.backouting = false
+		return nil
+	end
 
-			if found then -- if the last str match is a lable key, not a search char, toggle jump action
-				ya.manager_emit((state.args_autocd and state.match[url].isdir) and "cd" or "reveal", { url })
+	if not state.match then
+		return nil
+	end
 
-				is_match_key = true
-				break
+	for url, _ in pairs(state.match) do
+		for _, value in ipairs(state.match[url].key) do
+			if value == final_input_str then
+				return url
 			end
 		end
+	end
+
+	return nil
+end)
+
+local set_target_str = ya.sync(function(state, patterns, final_input_str, re_match)
+	local url = check_key_is_lable(final_input_str)
+	if url then -- if the last str match is a lable key, not a searchchar,toggle jump action
+		if not state.args_autocd and state.match[url].pane == "current" then -- if target file in current pane, use `arrow` instead of`reveal` tosupport select mode
+			local folder = Folder:by_kind(Folder.CURRENT)
+			ya.manager_emit("arrow", { state.match[url].cursorPos - folder.cursor - 1 + folder.offset })
+		elseif state.args_autocd and state.match[url].isdir then
+			ya.manager_emit("cd", { url })
+		else
+			ya.manager_emit("reveal", { url })
+		end
+		return true
 	end
 
 	-- clears the previously calculated data when input change
@@ -341,33 +367,37 @@ local set_target_str = ya.sync(function(state, patterns, final_input_str)
 	state.next_char = nil
 
 	-- calculate match data
-	local exist_match = record_match_file(patterns)
+	local exist_match = record_match_file(patterns, re_match)
 
 	-- apply match data to render
 	ya.render()
 
-	if is_match_key or not exist_match then
-		return true -- hit lable key or no match file
-	else
-		return false
-	end
+	return ((not exist_match) and state.opt_auto_exit_when_unmatch) and true or false
 end)
 
 local clear_state_str = ya.sync(function(state)
 	state.match = nil
 	state.next_char = nil
+	state.backouting = nil
+	state.match_pattern = nil
 	ya.render()
 end)
 
 local set_opts_default = ya.sync(function(state)
 	if state.opt_unmatch_fg == nil then
-		state.opt_unmatch_fg = "#928374"
+		state.opt_unmatch_fg = "#b2a496"
 	end
 	if state.opt_match_str_fg == nil then
 		state.opt_match_str_fg = "#000000"
 	end
 	if state.opt_match_str_bg == nil then
 		state.opt_match_str_bg = "#73AC3A"
+	end
+	if state.opt_first_match_str_fg == nil then
+		state.opt_first_match_str_fg = "#000000"
+	end
+	if state.opt_first_match_str_bg == nil then
+		state.opt_first_match_str_bg = "#73AC3A"
 	end
 	if state.opt_lable_fg == nil then
 		state.opt_lable_fg = "#EADFC8"
@@ -381,7 +411,35 @@ local set_opts_default = ya.sync(function(state)
 	if state.opt_search_patterns == nil then
 		state.opt_search_patterns = {}
 	end
+	if state.opt_show_search_in_statusbar == nil then
+		state.opt_show_search_in_statusbar = false
+	end
+	if state.opt_auto_exit_when_unmatch == nil then
+		state.opt_auto_exit_when_unmatch = true
+	end
+	if state.opt_enable_capital_lable == nil then
+		state.opt_enable_capital_lable = false
+	end
 	return state.opt_search_patterns
+end)
+
+local backout_last_input = ya.sync(function(state, input_str)
+	local final_input_str = input_str:sub(-2, -2)
+	input_str = input_str:sub(1, -2)
+
+	state.backouting = true
+	state.match_pattern = input_str
+	ya.render()
+	return input_str, final_input_str
+end)
+
+local flush_input_key_in_statusbar = ya.sync(function(state, input_str, re_match)
+	if re_match then
+		state.match_pattern = "[~]"
+	else
+		state.match_pattern = input_str
+	end
+	ya.render()
 end)
 
 local set_args_default = ya.sync(function(state, args)
@@ -395,29 +453,42 @@ end)
 return {
 	setup = function(state, opts)
 		-- Save the user configuration to the plugin's state
-		if opts ~= nil then
-			return
+		if opts ~= nil and opts.unmatch_fg ~= nil then
+			state.opt_unmatch_fg = opts.unmatch_fg
 		end
-		if opts.opt_match_str_fg ~= nil then
-			state.opt_match_str_fg = opts.opt_match_str_fg
+		if opts ~= nil and opts.match_str_fg ~= nil then
+			state.opt_match_str_fg = opts.match_str_fg
 		end
-		if opts.opt_match_str_bg ~= nil then
-			state.opt_match_str_bg = opts.opt_match_str_bg
+		if opts ~= nil and opts.match_str_bg ~= nil then
+			state.opt_match_str_bg = opts.match_str_bg
 		end
-		if opts.opt_unmatch_fg ~= nil then
-			state.opt_unmatch_fg = opts.opt_unmatch_fg
+		if opts ~= nil and opts.first_match_str_fg ~= nil then
+			state.opt_first_match_str_fg = opts.first_match_str_fg
 		end
-		if opts.opt_lable_fg ~= nil then
-			state.opt_lable_fg = opts.opt_lable_fg
+		if opts ~= nil and opts.first_match_str_bg ~= nil then
+			state.opt_first_match_str_bg = opts.first_match_str_bg
 		end
-		if opts.opt_lable_bg ~= nil then
-			state.opt_lable_bg = opts.opt_lable_bg
+		if opts ~= nil and opts.lable_fg ~= nil then
+			state.opt_lable_fg = opts.lable_fg
 		end
-		if opts.opt_only_current ~= nil then
-			state.opt_only_current = opts.opt_only_current
+		if opts ~= nil and opts.lable_bg ~= nil then
+			state.opt_lable_bg = opts.lable_bg
 		end
-		if opts.opt_search_patterns ~= nil then
-			state.opt_search_patterns = opts.opt_search_patterns
+
+		if opts ~= nil and opts.only_current ~= nil then
+			state.opt_only_current = opts.only_current
+		end
+		if opts ~= nil and opts.search_patterns ~= nil then
+			state.opt_search_patterns = opts.search_patterns
+		end
+		if opts ~= nil and opts.show_search_in_statusbar ~= nil then
+			state.opt_show_search_in_statusbar = opts.show_search_in_statusbar
+		end
+		if opts ~= nil and opts.auto_exit_when_unmatch ~= nil then
+			state.opt_auto_exit_when_unmatch = opts.auto_exit_when_unmatch
+		end
+		if opts ~= nil and opts.enable_capital_lable ~= nil then
+			state.opt_enable_capital_lable = opts.enable_capital_lable
 		end
 	end,
 
@@ -430,6 +501,7 @@ return {
 		local input_str = ""
 		local patterns = {}
 		local final_input_str = ""
+		local re_match = false
 		while true do
 			local cand = ya.which({ cands = INPUT_CANDS, silent = true })
 			if cand == nil then
@@ -441,22 +513,27 @@ return {
 			end
 
 			if INPUT_KEY[cand] == "<Enter>" then
-				final_input_str = KEYS_LABLE[1]
+				final_input_str = get_first_match_lable()
 				patterns = ""
 			elseif INPUT_KEY[cand] == "<Space>" then
 				final_input_str = ""
+				input_str = ""
 				patterns = opt_search_patterns
-			elseif INPUT_KEY[cand] == "." then
-				final_input_str = ""
-				input_str = input_str .. "[.]"
+				re_match = true
+			elseif INPUT_KEY[cand] == "<Backspace>" then
+				input_str, final_input_str = backout_last_input(input_str)
 				patterns = { input_str }
+				re_match = false
 			else
 				final_input_str = INPUT_KEY[cand]
 				input_str = input_str .. string.lower(INPUT_KEY[cand])
 				patterns = { input_str }
+				re_match = false
 			end
 
-			local want_exit = set_target_str(patterns, final_input_str)
+			flush_input_key_in_statusbar(input_str, re_match)
+
+			local want_exit = set_target_str(patterns, final_input_str, re_match)
 			if want_exit then
 				break
 			end
