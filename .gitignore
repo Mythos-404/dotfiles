@@ -17,3 +17,5 @@ history.*
 pid
 
 mpd.db
+
+.luarc.json
