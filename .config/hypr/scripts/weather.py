@@ -22,6 +22,15 @@ CACHE_FILE = f"{CACHE_DIR}/om_weather.json"
 EXPIRATION_DATE = 60 * 30  # 30 分钟
 
 
+def notify(message: str, level) -> None:
+    """
+    :type level: "low" | "normal" | "critical"
+    """
+    import subprocess as sub
+
+    sub.run(f"notify-send -t 8000 -u {level} WeatherAPI {message}".split(" "))
+
+
 def print_waybar_json(text: str | dict, alt: str = "", tooltip: str = "") -> None:
     if isinstance(text, dict):
         print(json.dumps(text).decode("utf-8"))
@@ -58,9 +67,11 @@ def get_whater_api() -> None:
                 f.write(json.dumps(weather).decode("utf-8"))
         except req.exceptions.ConnectionError:
             print_waybar_json("NotNetwork 󰌙 ")
+            notify("没网啦!!!", "critical")
             sys.exit(0)
         except req.exceptions.Timeout:
             print_waybar_json("Timeout 󰌙 ")
+            notify("超时啦!!!", "critical")
             sys.exit(0)
 
 
@@ -81,6 +92,8 @@ def get_json() -> dict:
             current_icon = get_daytime_icon("", "")
         case 2 | 3:  # 多云
             current_icon = get_daytime_icon("", "")
+        case x if 40 <= x <= 48:
+            current_icon = get_daytime_icon("", "")
         case 60 | 61 | 80:  # 小雨
             current_icon = get_daytime_icon("", "")
         case x if 50 <= x <= 59:  # 毛毛雨
@@ -93,6 +106,7 @@ def get_json() -> dict:
             current_icon = get_daytime_icon("", "")
         case _:
             current_icon = ""
+            notify("图标没啦!!!", "critical")
 
     return {
         "text": f"{weather['temp']}({weather['temp_max']})°C {current_icon}",
