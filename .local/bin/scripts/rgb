@@ -807,7 +807,6 @@ main() {
 			--vimgrep
 			"${RG_ARGS[@]}"
 			--context 0
-			--sort path
 			--
 			"$PATTERN"
 			"${FILES[@]}"
