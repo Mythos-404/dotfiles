@@ -29,7 +29,7 @@ setopt HIST_IGNORE_ALL_DUPS
 bindkey -v
 
 # Prompt for spelling correction of commands.
-setopt CORRECT
+# setopt CORRECT
 
 # Customize spelling correction prompt.
 #SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
@@ -97,7 +97,6 @@ unset key
 zstyle :compinstall filename '/home/mythos_404/.zshrc'
 
 autoload -Uz compinit
-compinit
 # End of lines added by compinstall
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
