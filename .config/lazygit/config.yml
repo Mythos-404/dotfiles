@@ -1,14 +1,15 @@
 # yaml-language-server: $schema=https://json.schemastore.org/lazygit.json
 notARepository: skip
-gui:
-    nerdFontsVersion: "3"
-    showBottomLine: false
-    border: rounded
-    mouseEvents: false
-git:
-    parseEmoji: true
-    paging:
-        colorArg: always
-        pager: delta --dark --paging=never
 os:
-    editPreset: "nvim"
+  editPreset: "nvim"
+git:
+  branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium --oneline {{branchName}} --"
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+  parseEmoji: true
+gui:
+  nerdFontsVersion: "3"
+  showBottomLine: false
+  border: rounded
+  mouseEvents: false
