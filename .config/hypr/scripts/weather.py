@@ -92,11 +92,11 @@ def get_json() -> dict:
             current_icon = get_daytime_icon("", "")
         case 2 | 3:  # 多云
             current_icon = get_daytime_icon("", "")
-        case x if 40 <= x <= 48:
+        case code if 40 <= code <= 48:
             current_icon = get_daytime_icon("", "")
-        case 60 | 61 | 80:  # 小雨
+        case 60 | 61 | 80 | 81:  # 小雨
             current_icon = get_daytime_icon("", "")
-        case x if 50 <= x <= 59:  # 毛毛雨
+        case code if 50 <= code <= 59:  # 毛毛雨
             current_icon = get_daytime_icon("", "")
         case 62 | 63 | 64 | 65:  # 中到大雨
             current_icon = get_daytime_icon("", "")
@@ -104,9 +104,9 @@ def get_json() -> dict:
             current_icon = get_daytime_icon("", "")
         case 72 | 73 | 74 | 75:  # 大雪
             current_icon = get_daytime_icon("", "")
-        case _:
+        case code:
             current_icon = ""
-            notify("图标没啦!!!", "critical")
+            notify(f"图标没啦!!!({code})", "critical")
 
     return {
         "text": f"{weather['temp']}({weather['temp_max']})°C {current_icon}",
