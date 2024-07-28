@@ -8,6 +8,7 @@
 
 [core]
 	pager = delta
+	symlinks = true
 [pager]
 	log = rg -v '^    <!-- ' | delta  # or less
 [interactive]
