@@ -26,26 +26,26 @@ prepend_keymap = [
     # plugin
 
     # bookmarks
-    { on = [ "m" ],      run = "plugin bookmarks-persistence --args=save",            desc = "Save current position as a bookmark"}, 
+    { on = [ "m" ],      run = "plugin bookmarks-persistence --args=save",            desc = "Save current position as a bookmark" },
     { on = [ "'" ],      run = "plugin bookmarks-persistence --args=jump",            desc = "Jump to a bookmark" },
-    { on = [ "b", "d" ], run = "plugin bookmarks-persistence --args=delete",          desc = "Delete a bookmark"}, 
-    { on = [ "b", "D" ], run = "plugin bookmarks-persistence --args=delete_all",      desc = "Delete all bookmarks"}, 
+    { on = [ "b", "d" ], run = "plugin bookmarks-persistence --args=delete",          desc = "Delete a bookmark" },
+    { on = [ "b", "D" ], run = "plugin bookmarks-persistence --args=delete_all",      desc = "Delete all bookmarks" },
 
     # heyjump
-    { on = [ "i" ], run = "plugin searchjump",                 desc = "Search jump"},
-    { on = [ "I" ], run = "plugin searchjump --args='autocd'", desc = "Search jump (autocd)"},
+    { on = [ "i" ], run = "plugin searchjump",                 desc = "Search jump" },
+    { on = [ "I" ], run = "plugin searchjump --args='autocd'", desc = "Search jump (autocd)" },
 
-    # file-actions
-    # { on = [ "e" ], run = "plugin file-actions --args='around '", desc = "Perform actions on selected files"},
+    # max-preview.yazi
+    { on = [ "T" ], run = "plugin --sync max-preview", desc = "Maximize or restore preview" },
 
     # utils plugin
     # chmod
-    { on = [ "c", "m" ], run = "plugin mutils --args='chmod'", desc = "Chmod on selected files"},
+    { on = [ "c", "m" ], run = "plugin mutils --args='chmod'", desc = "Chmod on selected files" },
 
     # smart enter
-    { on = [ "l" ], run =  "plugin --sync mutils --args='smart_enter'", desc = "Enter the child directory, or open the file"},
+    { on = [ "l" ], run =  "plugin --sync mutils --args='smart_enter'", desc = "Enter the child directory, or open the file" },
 
     # diff
-    { on = [ "c", "i", "c" ], run = "plugin mutils --args='diff'", desc = "Diff the selected with the hovered file(output clipboard)"},
-    { on = [ "c", "i", "f" ], run = "plugin mutils --args='diff save'", desc = "Diff the selected with the hovered file(output file)"},
+    { on = [ "c", "i", "c" ], run = "plugin mutils --args='diff'", desc = "Diff the selected with the hovered file(output clipboard)" },
+    { on = [ "c", "i", "f" ], run = "plugin mutils --args='diff save'", desc = "Diff the selected with the hovered file(output file)" },
 ]

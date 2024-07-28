@@ -32,6 +32,9 @@ end
 local function delete_lines_by_content(file_path, pattern)
 	local lines = {}
 	local file = io.open(file_path, "r")
+	if not file then
+		return
+	end
 
 	-- Read all lines and store those that do not match the pattern
 	for line in file:lines() do
@@ -43,7 +46,10 @@ local function delete_lines_by_content(file_path, pattern)
 
 	-- Write back the lines that don't match the pattern
 	file = io.open(file_path, "w")
-	for i, line in ipairs(lines) do
+	if not file then
+		return
+	end
+	for _, line in ipairs(lines) do
 		file:write(line .. "\n")
 	end
 	file:close()
@@ -52,7 +58,10 @@ end
 -- save table to file
 local save_to_file = ya.sync(function(state, filename)
 	local file = io.open(filename, "w+")
-	for i, f in ipairs(state.bookmarks) do
+	if not file then
+		return
+	end
+	for _, f in ipairs(state.bookmarks) do
 		file:write(string.format("%s###%s###%s###%s", f.on, f.file_url, f.desc, f.isdir), "\n")
 	end
 	file:close()
@@ -90,11 +99,11 @@ local load_file_to_state = ya.sync(function(state, filename)
 end)
 
 local save_bookmark = ya.sync(function(state, message, key)
-	local folder = Folder:by_kind(Folder.CURRENT)
+	local folder = cx.active.current
 	local under_cursor_file = folder.window[folder.cursor - folder.offset + 1]
 
 	-- avoid add exists url
-	for y, cand in ipairs(state.bookmarks) do
+	for _, cand in ipairs(state.bookmarks) do
 		if tostring(under_cursor_file.url) == cand.desc then
 			return
 		end
@@ -161,12 +170,12 @@ local auto_generate_key = ya.sync(function(state)
 	-- if input_key is empty,auto find a key to bind from begin SUPPORTED_KEYS
 	local find = false
 	local auto_assign_key
-	for i, key in ipairs(SUPPORTED_KEYS) do
+	for _, key in ipairs(SUPPORTED_KEYS) do
 		if find then
 			break
 		end
 
-		for y, cand in ipairs(state.bookmarks) do
+		for _, cand in ipairs(state.bookmarks) do
 			if key == cand.on then
 				goto continue
 			end
@@ -192,7 +201,7 @@ local assign_key = ya.sync(function(state, input_key)
 		return nil
 	end
 
-	for y, cand in ipairs(state.bookmarks) do
+	for _, cand in ipairs(state.bookmarks) do
 		if input_key == cand.on then
 			keyset_notify("assign fail,key has been used")
 			return nil
@@ -208,15 +217,14 @@ local function get_bind_key()
 		position = { "top-center", y = 3, w = 40 },
 	})
 	if event == 1 and key_set ~= "" then
-		local key_set = assign_key(key_set)
+		key_set = assign_key(key_set)
 		if key_set == nil then
 			return get_bind_key()
 		else
 			return key_set
 		end
 	elseif event == 1 and key_set == "" then
-		local generate_key = auto_generate_key()
-		return generate_key
+		return auto_generate_key()
 	else
 		return nil
 	end
