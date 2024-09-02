@@ -121,7 +121,8 @@ cli_init() {
 
 # ============= Path ===============
 # custom bin
-export PATH="$HOME/.local/bin/scripts:$PATH"
+export PATH="$HOME/.local/scripts:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # rust
 export PATH="$PATH:$HOME/.cargo/bin"
@@ -211,7 +212,8 @@ export MCFLY_KEY_SCHEME=vim
 export MCFLY_INTERFACE_VIEW=TOP
 export MCFLY_PROMPT="❯"
 export MCFLY_FUZZY=2
-export MCFLY_RESULTS=50
+export MCFLY_RESULTS=25
+export MCFLY_RESULTS_SORT=LAST_RUN
 
 # ============= Alias ==============
 alias sudo='sudo '
