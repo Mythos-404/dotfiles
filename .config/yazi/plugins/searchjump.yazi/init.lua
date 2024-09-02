@@ -2611,7 +2611,7 @@ local toggle_ui = ya.sync(function(st)
 	end
 
 	for _, value in ipairs(Entity._children) do
-		if value["order"] == 3000 then
+		if value["order"] == 4000 then
 			st.highlights_function = value[1]
 			st.highlights_id = value["id"]
 			break
