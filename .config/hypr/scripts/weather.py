@@ -3,26 +3,29 @@
 import os
 import sys
 import time
+from pathlib import Path
 
 import orjson as json
 
-CITY = "Jinan"
-PARAMS = {
-    "timezone": "auto",
-    "timeformat": "unixtime",
-    "latitude": 36.591699,
-    "longitude": 117.333495,
-    "current": "temperature_2m,weather_code",
-    "daily": "temperature_2m_max,temperature_2m_min,sunset,sunrise",
-    "forecast_days": 1,
-}
+with open(Path.home() / ".position") as f:
+    position: dict[str, str | float] = json.loads(f.read())
+    CITY = position["city"]
+    PARAMS = {
+        "timezone": "auto",
+        "timeformat": "unixtime",
+        "latitude": position["latitude"],
+        "longitude": position["longitude"],
+        "current": "temperature_2m,weather_code",
+        "daily": "temperature_2m_max,temperature_2m_min,sunset,sunrise",
+        "forecast_days": 1,
+    }
 
 CACHE_DIR = f"{os.path.expanduser('~')}/.cache/rbn"
 CACHE_FILE = f"{CACHE_DIR}/om_weather.json"
 EXPIRATION_DATE = 60 * 30  # 30 分钟
 
 
-def notify(message: str, level) -> None:
+def notify(message: str, level: str) -> None:
     """
     :type level: "low" | "normal" | "critical"
     """
@@ -31,7 +34,7 @@ def notify(message: str, level) -> None:
     sub.run(f"notify-send -t 8000 -u {level} WeatherAPI {message}".split(" "))
 
 
-def print_waybar_json(text: str | dict, alt: str = "", tooltip: str = "") -> None:
+def print_waybar_json(text: str | dict[str, str], alt: str = "", tooltip: str = "") -> None:
     if isinstance(text, dict):
         print(json.dumps(text).decode("utf-8"))
     else:
@@ -75,7 +78,7 @@ def get_whater_api() -> None:
             sys.exit(0)
 
 
-def get_json() -> dict:
+def get_json() -> dict[str, str]:
     def get_daytime_icon(day_icon: str, moon_icon: str) -> str:
         """判断是否日出返回正确的图标"""
         if (now := time.time()) > weather["sunrise"] and now < weather["sunset"]:
