@@ -163,14 +163,14 @@ PopupMenu._render = ya.sync(function(state, display, items, height, cursor)
 
 		local list_items = {}
 		for i, item in ipairs(items) do
-			table.insert(list_items, ui.ListItem(item):style(i == cursor and THEME.manager.hovered or nil))
+			table.insert(list_items, ui.Line(item):style(i == cursor and THEME.manager.hovered or nil))
 		end
 
 		local area = H.center_layout(self._area, height)
 		return ya.list_merge(state.old_render(self), {
 			ui.Clear(area),
-			ui.Border(area, ui.Bar.ALL):type(ui.Border.ROUNDED):style(THEME.tasks.border),
-			ui.List(area:padding(ui.Padding.xy(1, 1)), list_items),
+			ui.Border(ui.Bar.ALL):area(area):type(ui.Border.ROUNDED):style(THEME.tasks.border),
+			ui.List(list_items):area(area:padding(ui.Padding.xy(1, 1))),
 		})
 	end
 	ya.render()

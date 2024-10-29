@@ -63,7 +63,7 @@ function M:peek()
 		end
 	until i >= self.skip + limit
 
-	local p = ui.Paragraph(self.area, metadata):wrap(ui.Paragraph.WRAP)
+	local p = ui.Text(metadata):area(self.area):wrap(ui.Text.WRAP)
 	ya.preview_widgets(self, { p })
 
 	local cover_width = self.area.w / 2 - 5

@@ -1,20 +1,20 @@
+---@diagnostic disable: redundant-parameter
 local function setup()
 	local old_build = Tab.build
 	Tab.build = function(self, ...)
 		local bar = function(c, x, y)
 			if x <= 0 or x == self._area.w - 1 then
-				return ui.Bar(ui.Rect.default, ui.Bar.TOP)
+				return ui.Bar(ui.Rect.default):area(ui.Bar.TOP)
 			end
 
-			return ui.Bar(
-				ui.Rect({
+			return ui.Bar(ui.Bar.TOP)
+				:area(ui.Rect({
 					x = x,
 					y = math.max(0, y),
 					w = ya.clamp(0, self._area.w - x, 1),
 					h = math.min(1, self._area.h),
-				}),
-				ui.Bar.TOP
-			):symbol(c)
+				}))
+				:symbol(c)
 		end
 
 		local c = self._chunks
@@ -26,9 +26,9 @@ local function setup()
 
 		local style = THEME.manager.border_style
 		self._base = ya.list_merge(self._base or {}, {
-			ui.Border(self._area, ui.Border.ALL):type(ui.Border.ROUNDED):style(style),
-			ui.Bar(self._chunks[1], ui.Bar.RIGHT):style(style),
-			ui.Bar(self._chunks[3], ui.Bar.LEFT):style(style),
+			ui.Border(ui.Border.ALL):area(self._area):type(ui.Border.ROUNDED):style(style),
+			ui.Bar(ui.Bar.RIGHT):area(self._chunks[1]):style(style),
+			ui.Bar(ui.Bar.LEFT):area(self._chunks[3]):style(style),
 
 			bar("┬", c[1].right - 1, c[1].y),
 			bar("┴", c[1].right - 1, c[1].bottom - 1),

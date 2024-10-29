@@ -1,7 +1,8 @@
 --- @diagnostic disable: undefined-global, undefined-field
 --- @alias Mode Mode Comes from Yazi.
+---@diagnostic disable-next-line: duplicate-doc-alias
 --- @alias Rect Rect Comes from Yazi.
---- @alias Paragraph Paragraph Comes from Yazi.
+--- @alias Text Text Comes from Yazi.
 --- @alias Line Line Comes from Yazi.
 --- @alias Span Span Comes from Yazi.
 --- @alias Color Color Comes from Yazi.
@@ -230,7 +231,7 @@ end
 function Yatline.string.get:hovered_size()
 	local hovered = cx.active.current.hovered
 	if hovered then
-		return ya.readable_size(hovered:size() or hovered.cha.length)
+		return ya.readable_size(hovered:size() or hovered.cha.len)
 	else
 		return ""
 	end
@@ -512,7 +513,7 @@ function Yatline.coloreds.get:permissions()
 	local hovered = cx.active.current.hovered
 
 	if hovered then
-		local perm = hovered.cha:permissions()
+		local perm = hovered.cha:perm()
 
 		local coloreds = {}
 		coloreds[1] = { " ", "black" }
@@ -834,13 +835,13 @@ end
 --- header-line or status-line.
 --- @param area Rect The area where paragraph will be placed in.
 --- @param line? Line The line which used in paragraph. It is optional.
---- @return Paragraph paragraph Configured parapgraph.
-local function config_paragraph(area, line)
+--- @return Text paragraph Configured parapgraph.
+local function config_text(area, line)
 	local line_array = { line } or {}
 	if show_background then
-		return ui.Paragraph(area, line_array):style(style_c)
+		return ui.Text(line_array):area(area):style(style_c)
 	else
-		return ui.Paragraph(area, line_array)
+		return ui.Text(line_array):area(area)
 	end
 end
 
@@ -991,10 +992,10 @@ return {
 		Progress.partial_render = function(self)
 			local progress = cx.tasks.progress
 			if progress.total == 0 then
-				return { config_paragraph(self._area) }
+				return { config_text(self._area) }
 			end
 
-			local gauge = ui.Gauge(self._area)
+			local gauge = ui.Gauge():area(self._area)
 			if progress.fail == 0 then
 				gauge = gauge:gauge_style(THEME.status.progress_normal)
 			else
@@ -1021,8 +1022,8 @@ return {
 					local right_line = config_line(header_line.right, Side.RIGHT)
 
 					return {
-						config_paragraph(self._area, left_line),
-						ui.Paragraph(self._area, { right_line }):align(ui.Paragraph.RIGHT),
+						config_text(self._area, left_line),
+						ui.Text({ right_line }):area(self._area):align(ui.Text.RIGHT),
 					}
 				end
 
@@ -1046,9 +1047,9 @@ return {
 					local right_line = config_line(status_line.right, Side.RIGHT)
 
 					return {
-						config_paragraph(self._area, left_line),
-						ui.Paragraph(self._area, { right_line }):align(ui.Paragraph.RIGHT),
-						table.unpack(Progress:render(self._area, right_line:width())),
+						config_text(self._area, left_line),
+						ui.Text({ right_line }):area(self._area):align(ui.Text.RIGHT),
+						-- table.unpack(Progress:render(self._area, right_line:width())),
 					}
 				end
 

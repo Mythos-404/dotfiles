@@ -8,10 +8,10 @@ return {
 		local archive_commands = {
 			{ ["7z Archive"] = { ext = "7z", command = "7z", args = "a" } },
 			{ ["Zip Archive"] = { ext = "zip", command = "zip", args = "-r" } },
-			{ ["Tar Archive"] = { ext = "tar", command = "tar", args = "rpf" } },
-			{ ["ZStd Archive"] = { ext = "tar.zst", command = "tar", args = "rpf" } },
-			{ ["Gzip Archive"] = { ext = "tar.gz", command = "tar", args = "rpf" } },
-			{ ["Bzip2 Archive"] = { ext = "tar.bz2", command = "tar", args = "rpf" } },
+			{ ["Tar Archive"] = { ext = "tar", command = "tar", args = "acpf" } },
+			{ ["ZStd Archive"] = { ext = "tar.zst", command = "tar", args = "acpf" } },
+			{ ["Gzip Archive"] = { ext = "tar.gz", command = "tar", args = "acpf" } },
+			{ ["Bzip2 Archive"] = { ext = "tar.bz2", command = "tar", args = "acpf" } },
 		}
 
 		PopupMenu(

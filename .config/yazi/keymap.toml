@@ -4,7 +4,7 @@
 prepend_keymap = [
     { on = [ "g", "t" ], run = "cd /tmp",                            desc = "Go to the temp directory" },
     { on = [ "g", "r" ], run = "cd /run/user",                       desc = "Go to the user run directory" },
-    { on = [ "g", "." ], run = [ "cd ~/dotfiles", "hidden toggle" ], desc = "Go to the dotfiles directory" },
+    { on = [ "g", "." ], run = [ "cd ~/.dotfiles", "hidden toggle" ], desc = "Go to the dotfiles directory" },
 
     # open shell
     { on = [ "<C-s>" ], run = 'shell "$SHELL" --block --confirm', desc = "Open shell here" },

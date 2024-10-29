@@ -75,7 +75,7 @@ require("yatline"):setup({
 	unstaged_color = mocha_palette.peach,
 	untracked_color = mocha_palette.teal,
 
-	show_background = true,
+	show_background = false,
 
 	display_header_line = true,
 	display_status_line = true,
