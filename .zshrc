@@ -20,6 +20,7 @@ fi
 
 # Remove older command from the history if a duplicate is to be added.
 setopt HIST_IGNORE_ALL_DUPS
+setopt EXTENDED_HISTORY
 
 #
 # Input/output
@@ -135,6 +136,8 @@ export PATH="$PATH:$GEM_HOME/bin"
 export GHCUP_INSTALL_BASE_PREFIX="$HOME"
 export PATH="$PATH:$GHCUP_INSTALL_BASE_PREFIX/.ghcup/bin"
 
+# nim
+export PATH="$PATH:$HOME/.nimble/bin"
 
 # ============= Config =============
 # lang
@@ -146,6 +149,7 @@ export LC_CTYPE=en_US.UTF-8
 export EDITOR=nvim
 export VISUAL=nvim
 export LESSOPEN='|~/.lessfilter %s'
+export MANPAGER='nvim +Man!'
 
 # rustup
 export RUSTUP_DIST_SERVER="https://rsproxy.cn"
@@ -260,5 +264,6 @@ alias Y='yazi'
 alias T='todo.sh'
 alias btp='btop'
 alias lzg='lazygit'
+alias lzd='lazydocker'
 alias pn='pnpm'
 alias ps='procs'

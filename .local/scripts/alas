@@ -1,7 +1,0 @@
-#!/bin/env bash
-
-cd ~/.local/share/AzurLaneAutoScript || exit
-
-(podman-compose up &>/dev/null &) &>/dev/null
-
-echo "Alas Run!"
