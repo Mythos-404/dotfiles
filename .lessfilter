@@ -11,6 +11,10 @@ ext=${1##*.}
 
 # echo "类型: ${category}, 种类: ${kind}, 后缀: ${ext}"
 
+if [[ $category == "image" ]]; then
+	kitten icat --clear --transfer-mode=memory --stdin=no --place=50x50@0x0 "$1" && exit 0
+fi
+
 case $kind in
 json)
 	if [ "$ext" = ipynb ]; then
