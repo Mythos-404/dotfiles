@@ -41,7 +41,6 @@ zmodule zsh-users/zsh-autosuggestions
 # }}} End configuration added by Zim install
 
 # =================================================
-zmodule bigH/auto-sized-fzf
 zmodule Aloxaf/fzf-tab
 zmodule Freed-Wu/fzf-tab-source
 

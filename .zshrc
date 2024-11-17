@@ -118,6 +118,7 @@ cli_init_cache() {
 cli_init() {
     cli_init_cache zoxide init zsh
     cli_init_cache mcfly init zsh
+    cli_init_cache direnv hook zsh
 }
 
 # ============= Path ===============
@@ -157,7 +158,7 @@ export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
 export CARGO_UNSTABLE_SPARSE_REGISTRY=true
 
 # UV
-export UV_INDEX_URL="https://mirrors.bfsu.edu.cn/pypi/web/simple"
+export UV_DEFAULT_INDEX="https://mirrors.bfsu.edu.cn/pypi/web/simple"
 
 # autopair
 export AUTOPAIR_INIT_INHIBIT=true
@@ -195,12 +196,13 @@ zvm_after_init_commands+=(cli_init autopair-init init_fzf_binds)
 # zsh-autosuggestions
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-# fzf
+# fzf-tab
+zstyle ':completion:*' menu no
 zstyle ':completion:*' extra-verbose true
-zstyle ':fzf-tab:*' prefix ''
-zstyle ':fzf-tab:*' single-group prefix color header
-zstyle ':fzf-tab:*' continuous-trigger 'ctrl-_'
-zstyle ':fzf-tab:*' switch-group 'alt-,' 'alt-.'
+zstyle ':fzf-tab:*' continuous-trigger 'alt-space'
+zstyle ':fzf-tab:*' switch-group 'alt-h' 'alt-l'
+
+# fzf
 export ZSH_FZF_HISTORY_SEARCH_FZF_ARGS='+s +m -x -e --preview-window=hidden'
 export FZF_TMUX_HEIGHT=$((LINES - 15))
 export FZF_DEFAULT_OPTS=" \
