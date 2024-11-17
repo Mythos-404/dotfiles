@@ -9,6 +9,7 @@
 [core]
 	pager = delta
 	symlinks = true
+	excludesfile = /home/mythos_404/.gitconf/gitignore_global
 [pager]
 	log = rg -v '^    <!-- ' | delta  # or less
 [interactive]

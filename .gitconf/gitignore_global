@@ -1,0 +1,8 @@
+# Direnv stuff
+.direnv
+.envrc
+
+# Editor files #
+*~
+*.swp
+*.swo
