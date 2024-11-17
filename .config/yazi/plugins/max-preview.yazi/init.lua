@@ -1,3 +1,4 @@
+--- @sync entry
 return {
 	entry = function(st)
 		if st.old then
@@ -16,5 +17,8 @@ return {
 			end
 		end
 		ya.app_emit("resize", {})
+	end,
+	enabled = function(st)
+		return st.old ~= nil
 	end,
 }

@@ -36,7 +36,7 @@ prepend_keymap = [
     { on = [ "space", "s" ], run = "search rg",         desc = "Search files by content using ripgrep" },
 
     # max-preview.yazi
-    { on = [ "T" ], run = "plugin --sync max-preview", desc = "Maximize or restore preview" },
+    { on = [ "T" ], run = "plugin max-preview", desc = "Maximize or restore preview" },
 
     # aktionen.yazi
     { on = [ "e" ], run = "plugin aktionen", desc = "File actions" },
@@ -45,7 +45,7 @@ prepend_keymap = [
     { on = [ "c", "m" ], run = "plugin mutils --args='chmod'", desc = "Chmod on selected files" },
 
     # smart enter
-    { on = [ "l" ], run =  "plugin --sync mutils --args='smart_enter'", desc = "Enter the child directory, or open the file" },
+    { on = [ "l" ], run =  "plugin mutils --args='smart_enter'", desc = "Enter the child directory, or open the file" },
 
     # diff.yazi
     { on = [ "c", "i", "c" ], run = "plugin mutils --args='diff'",      desc = "Diff the selected with the hovered file(output clipboard)" },

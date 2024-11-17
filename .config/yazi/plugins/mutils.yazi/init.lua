@@ -1,3 +1,4 @@
+--- @sync entry
 local M = {}
 local H = {}
 
