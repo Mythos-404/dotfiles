@@ -156,7 +156,7 @@ end
 
 ---@private
 PopupMenu._render = ya.sync(function(state, display, items, height, cursor)
-	Root.render = function(self)
+	Root.redraw = function(self)
 		if not display then
 			return state.old_render(self)
 		end
@@ -197,7 +197,7 @@ end)
 
 H.sync_init = ya.sync(function(state)
 	if state.old_render == nil then
-		state.old_render = Root.render
+		state.old_render = Root.redraw
 	end
 
 	H.state.actions_path = ("%s/aktionen.yazi/actions"):format(BOOT.plugin_dir)

@@ -1049,7 +1049,7 @@ return {
 					return {
 						config_text(self._area, left_line),
 						ui.Text({ right_line }):area(self._area):align(ui.Text.RIGHT),
-						-- table.unpack(Progress:render(self._area, right_line:width())),
+						table.unpack(Progress:render(self._area, right_line:width())),
 					}
 				end
 
