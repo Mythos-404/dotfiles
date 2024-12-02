@@ -9,8 +9,8 @@ return {
 				self._chunks = ui.Layout()
 					:direction(ui.Layout.HORIZONTAL)
 					:constraints({
-						ui.Constraint.Percentage(0),
-						ui.Constraint.Percentage(0),
+						ui.Constraint.Percentage(1),
+						ui.Constraint.Percentage(1),
 						ui.Constraint.Percentage(100),
 					})
 					:split(self._area)

@@ -989,7 +989,7 @@ return {
 			task_processed_fg = "green"
 		end
 
-		Progress.partial_render = function(self)
+		Progress.redraw = function(self)
 			local progress = cx.tasks.progress
 			if progress.total == 0 then
 				return { config_text(self._area) }
@@ -1017,7 +1017,7 @@ return {
 
 		if display_header_line then
 			if show_line(header_line) then
-				Header.render = function(self)
+				Header.redraw = function(self)
 					local left_line = config_line(header_line.left, Side.LEFT)
 					local right_line = config_line(header_line.right, Side.RIGHT)
 
@@ -1035,21 +1035,22 @@ return {
 				end
 			end
 		else
-			Header.render = function()
+			Header.redraw = function()
 				return {}
 			end
 		end
 
 		if display_status_line then
 			if show_line(status_line) then
-				Status.render = function(self)
+				Status.redraw = function(self)
 					local left_line = config_line(status_line.left, Side.LEFT)
 					local right_line = config_line(status_line.right, Side.RIGHT)
+					local right_width = right_line:width()
 
 					return {
 						config_text(self._area, left_line),
 						ui.Text({ right_line }):area(self._area):align(ui.Text.RIGHT),
-						table.unpack(Progress:render(self._area, right_line:width())),
+						table.unpack(ya.redraw_with(Progress:new(self._area, right_width))),
 					}
 				end
 
@@ -1061,7 +1062,7 @@ return {
 				end
 			end
 		else
-			Status.render = function()
+			Status.redraw = function()
 				return {}
 			end
 		end

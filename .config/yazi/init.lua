@@ -1,4 +1,5 @@
 require("ui"):setup()
+require("folder-rules"):setup()
 
 local mocha_palette = {
 	rosewater = "#f5e0dc",

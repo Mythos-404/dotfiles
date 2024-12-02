@@ -13,8 +13,8 @@ return {
 		local shell_scipt = [[
 			IFS=$'\0'
 			for file in ${selection}; do
-				digest=$(md5sum "$file" | cut -d' ' -f1)
-				mv "$file" "${file%/*}/${digest%% *}.${file##*.}"
+			    digest=$(md5sum "$file" | cut -d' ' -f1)
+			    mv "$file" "${file%/*}/${digest%% *}.${file##*.}"
 			done
 		]] --> INJECT: bash
 		-- stylua: ignore

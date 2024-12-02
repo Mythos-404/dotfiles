@@ -27,7 +27,6 @@ return {
 				on_confirm = function(cursor)
 					local _, archive_command = next(archive_commands[cursor])
 
-					-- stylua: ignore
 					local shell_scipt = ([=[
 						IFS=$'\t'
 						arr_selection=(${selection})
@@ -41,7 +40,7 @@ return {
 
 						%s %s "${pack_name}".%s "${arr_selection[@]}"
 					]=]):format(archive_command.command, archive_command.args, archive_command.ext)
-					-- stylua: ignore
+
 					Command("bash")
 						:args({ "-c", shell_scipt })
 						:cwd(opts.selected[1]:match("^(.+)/"))

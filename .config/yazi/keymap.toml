@@ -32,8 +32,8 @@ prepend_keymap = [
 
     # searchjump.yazi
     { on = [ "s" ],          run = "plugin searchjump", desc = "Search jump" },
-    { on = [ "S" ],          run = "search fd",         desc = "Search files by name using fd" },
-    { on = [ "space", "s" ], run = "search rg",         desc = "Search files by content using ripgrep" },
+    { on = [ "S" ],          run = "search rg",         desc = "Search files by name using fd" },
+    { on = [ "F" ], run = "search fd",         desc = "Search files by content using ripgrep" },
 
     # max-preview.yazi
     { on = [ "T" ], run = "plugin max-preview", desc = "Maximize or restore preview" },
