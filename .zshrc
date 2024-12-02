@@ -129,6 +129,10 @@ export PATH="$HOME/.local/bin:$PATH"
 # rust
 export PATH="$PATH:$HOME/.cargo/bin"
 
+# golang
+export GOPATH="$HOME/.golang"
+export PATH="$PATH:$HOME/.golang/bin"
+
 # ruby
 export GEM_HOME="$HOME/.local/share/gem/ruby/3.0.0"
 export PATH="$PATH:$GEM_HOME/bin"
