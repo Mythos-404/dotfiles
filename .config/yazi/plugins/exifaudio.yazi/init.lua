@@ -1,7 +1,7 @@
 local M = {}
 
-function M:peek()
-	local cache = ya.file_cache(self)
+function M:peek(job)
+	local cache = ya.file_cache(job)
 	if not cache then
 		return
 	end
@@ -37,46 +37,46 @@ function M:peek()
 			"-AvgBitrate",
 			"-Channels",
 			"-AudioChannels",
-			tostring(self.file.url),
+			tostring(job.file.url),
 		})
 		:stdout(Command.PIPED)
 		:stderr(Command.NULL)
 		:spawn()
 
-	local limit = self.area.h
+	local limit = job.area.h
 	local i, metadata = 0, {}
 	repeat
 		local next, event = child:read_line()
 		if event == 1 then
-			return self:fallback_to_builtin()
+			return job:fallback_to_builtin()
 		elseif event ~= 0 then
 			break
 		end
 
 		i = i + 1
-		if i > self.skip then
+		if i > job.skip then
 			local m_title, m_tag = prettify(next)
 			local ti = ui.Span(m_title):bold()
 			local ta = ui.Span(m_tag)
 			table.insert(metadata, ui.Line({ ti, ta }))
 			table.insert(metadata, ui.Line({}))
 		end
-	until i >= self.skip + limit
+	until i >= job.skip + limit
 
-	local p = ui.Text(metadata):area(self.area):wrap(ui.Text.WRAP)
-	ya.preview_widgets(self, { p })
+	local p = ui.Text(metadata):area(job.area):wrap(ui.Text.WRAP)
+	ya.preview_widgets(job, { p })
 
-	local cover_width = self.area.w / 2 - 5
-	local cover_height = (self.area.h / 4) + 3
+	local cover_width = job.area.w / 2 - 5
+	local cover_height = (job.area.h / 4) + 3
 
 	local bottom_right = ui.Rect({
-		x = self.area.right - cover_width,
-		y = self.area.bottom - cover_height,
+		x = job.area.right - cover_width,
+		y = job.area.bottom - cover_height,
 		w = cover_width,
 		h = cover_height,
 	})
 
-	if self:preload() == 1 then
+	if self:preload(job) == 1 then
 		ya.image_show(cache, bottom_right)
 	end
 end
@@ -127,24 +127,24 @@ function prettify(metadata)
 	return t[1] .. ":", table.concat(t, ":", 2)
 end
 
-function M:seek(units)
+function M:seek(job)
 	local h = cx.active.current.hovered
-	if h and h.url == self.file.url then
+	if h and h.url == job.file.url then
 		ya.manager_emit("peek", {
-			tostring(math.max(0, cx.active.preview.skip + units)),
-			only_if = tostring(self.file.url),
+			tostring(math.max(0, cx.active.preview.skip + job.units)),
+			only_if = tostring(job.file.url),
 		})
 	end
 end
 
-function M:preload()
-	local cache = ya.file_cache(self)
+function M:preload(job)
+	local cache = ya.file_cache(job)
 	if not cache or fs.cha(cache) then
 		return 1
 	end
 
 	local output = Command("exiftool")
-		:args({ "-b", "-CoverArt", "-Picture", tostring(self.file.url) })
+		:args({ "-b", "-CoverArt", "-Picture", tostring(job.file.url) })
 		:stdout(Command.PIPED)
 		:stderr(Command.PIPED)
 		:output()

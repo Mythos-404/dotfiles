@@ -95,8 +95,8 @@ function M.diff(is_save_file)
 end
 
 return {
-	entry = function(_, args)
-		local action = args[1]
-		M[action](args[2])
+	entry = function(_, job)
+		local action = job.args[1]
+		M[action](job.args[2])
 	end,
 }
