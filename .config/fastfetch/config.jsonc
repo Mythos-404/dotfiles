@@ -14,6 +14,7 @@
     "break",
     "break",
     "break",
+    { "type": "custom", "format": "\n" },
     { "type": "custom", "format": "\t\t\t    Mythos_404" },
     { "type": "custom", "format": "________________________________________________________" },
     { "type": "os", "key": " ", "keyColor": "blue" },
