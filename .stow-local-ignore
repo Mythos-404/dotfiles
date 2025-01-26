@@ -8,3 +8,4 @@
 
 .luarc.json
 Justfile
+stylua.toml
