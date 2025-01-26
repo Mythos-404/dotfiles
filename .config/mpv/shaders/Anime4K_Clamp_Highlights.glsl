@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//!DESC Anime4K-v4.0-De-Ring-Compute-Statistics
+//!DESC [Anime4K_Clamp_Highlights][v4.0] De-Ring-Compute-Statistics
 //!HOOK MAIN
 //!BIND HOOKED
 //!SAVE STATSMAX
@@ -47,7 +47,7 @@ vec4 hook() {
 	return vec4(gmax, 0.0, 0.0, 0.0);
 }
 
-//!DESC Anime4K-v4.0-De-Ring-Compute-Statistics
+//!DESC [Anime4K_Clamp_Highlights][v4.0] De-Ring-Compute-Statistics
 //!HOOK MAIN
 //!BIND HOOKED
 //!BIND STATSMAX
@@ -70,7 +70,7 @@ vec4 hook() {
 	return vec4(gmax, 0.0, 0.0, 0.0);
 }
 
-//!DESC Anime4K-v4.0-De-Ring-Clamp
+//!DESC [Anime4K_Clamp_Highlights][v4.0] De-Ring-Clamp
 //!HOOK PREKERNEL
 //!BIND HOOKED
 //!BIND STATSMAX

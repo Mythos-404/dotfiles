@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//!DESC Anime4K-v3.2-Upscale-DoG-x2-Luma
+//!DESC [Anime4K_Upscale_DoG_x2][v3.2] Luma
 //!HOOK MAIN
 //!BIND HOOKED
 //!SAVE LINELUMA
@@ -35,7 +35,7 @@ vec4 hook() {
     return vec4(get_luma(HOOKED_tex(HOOKED_pos)), 0.0, 0.0, 0.0);
 }
 
-//!DESC Anime4K-v3.2-Upscale-DoG-x2-Kernel-X
+//!DESC [Anime4K_Upscale_DoG_x2][v3.2] Kernel-X
 //!WHEN OUTPUT.w MAIN.w / 1.200 > OUTPUT.h MAIN.h / 1.200 > *
 //!HOOK MAIN
 //!BIND HOOKED
@@ -74,7 +74,7 @@ vec4 hook() {
 }
 
 
-//!DESC Anime4K-v3.2-Upscale-DoG-x2-Kernel-Y
+//!DESC [Anime4K_Upscale_DoG_x2][v3.2] Kernel-Y
 //!WHEN OUTPUT.w MAIN.w / 1.200 > OUTPUT.h MAIN.h / 1.200 > *
 //!HOOK MAIN
 //!BIND HOOKED
@@ -116,7 +116,7 @@ vec4 hook() {
     return vec4(lumGaussian7(HOOKED_pos, vec2(0, HOOKED_pt.y)), minmax3(HOOKED_pos, vec2(0, HOOKED_pt.y)), 0);
 }
 
-//!DESC Anime4K-v3.2-Upscale-DoG-x2-Apply
+//!DESC [Anime4K_Upscale_DoG_x2][v3.2] Apply
 //!WHEN OUTPUT.w MAIN.w / 1.200 > OUTPUT.h MAIN.h / 1.200 > *
 //!HOOK MAIN
 //!BIND HOOKED

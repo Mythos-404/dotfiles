@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//!DESC Anime4K-v3.2-Denoise-Bilateral-Mean
+//!DESC [Anime4K_Denoise_Bilateral_Mean][v3.2]
 //!HOOK MAIN
 //!BIND HOOKED
 
