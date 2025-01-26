@@ -230,13 +230,15 @@ alias sudo='sudo '
 
 alias ip='ip -color'
 alias jctl='journalctl -p 3 -xb'
-alias top='btm'
-alias vim='nvim'
 
 alias cat='bat -p'
 alias mkdir='mkdir -p'
 alias cp='advcp -rvgi --reflink=always'
 alias mv='advmv -vg'
+
+alias top='btm'
+alias vim='nvim'
+alias ps='procs'
 
 alias ls='eza --icons --color-scale --group-directories-first'
 alias ll='ls -l --git'        # Long format, git status
@@ -272,4 +274,3 @@ alias btp='btop'
 alias lzg='lazygit'
 alias lzd='lazydocker'
 alias pn='pnpm'
-alias ps='procs'
