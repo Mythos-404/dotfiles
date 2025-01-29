@@ -12,6 +12,7 @@ import time
 from functools import *
 from itertools import *
 
+
 def _():
     modules = {
         "tq": ["tqdm"],

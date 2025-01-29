@@ -67,4 +67,6 @@ def _():
     if ip is None:
         return
     ip.prompts = MyPrompts(ip)  # pyright:ignore [reportAttributeAccessIssue]
+
+
 _()
