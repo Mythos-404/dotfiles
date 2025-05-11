@@ -161,14 +161,14 @@ PopupMenu._render = ya.sync(function(state, display, items, height, cursor)
 
         local list_items = {}
         for i, item in ipairs(items) do
-            table.insert(list_items, ui.Line(item):style(i == cursor and THEME.manager.hovered or nil))
+            table.insert(list_items, ui.Line(item):style(i == cursor and th.mgr.hovered or nil))
         end
 
         local area = H.center_layout(self._area, height)
         return ya.list_merge(state.old_render(self), {
             ui.Clear(area),
-            ui.Border(ui.Bar.ALL):area(area):type(ui.Border.ROUNDED):style(THEME.tasks.border),
-            ui.List(list_items):area(area:padding(ui.Padding.xy(1, 1))),
+            ui.Border(ui.Bar.ALL):area(area):type(ui.Border.ROUNDED):style(th.tasks.border),
+            ui.List(list_items):area(area:pad(ui.Pad.xy(1, 1))),
         })
     end
     ya.render()
@@ -194,7 +194,8 @@ end)
 H.sync_init = ya.sync(function(state)
     if state.old_render == nil then state.old_render = Root.redraw end
 
-    H.state.actions_path = ("%s/aktionen.yazi/actions"):format(BOOT.plugin_dir)
+    local home = os.getenv("HOME")
+    H.state.actions_path = ("%s/.config/yazi/plugins/aktionen.yazi/actions"):format(home)
 
     H.state.cursor_files = {}
     local hovered = cx.active.current.hovered
@@ -213,13 +214,13 @@ H.init_action = function()
 
     if #H.state.selected_files == 0 then H.state.selected_files = H.state.cursor_files end
 
-	-- stylua: ignore
-	local file_child, file_err =
-		Command("file")
-			:args({ "-bL", "--mime-type" })
-			:args(H.state.selected_files)
-			:stdout(Command.PIPED)
-			:spawn()
+    -- stylua: ignore
+    local file_child, file_err =
+        Command("file")
+            :args({ "-bL", "--mime-type" })
+            :args(H.state.selected_files)
+            :stdout(Command.PIPED)
+            :spawn()
     if H.flags.debug and file_err then ya.err("Aktionen load selected mime err" .. tostring(file_err)) end
 
     local selected_mimetype_set = {}
@@ -230,12 +231,12 @@ H.init_action = function()
         selected_mimetype_set[mimetype] = true
     end
 
-	-- stylua: ignore
-	local action_child, action_err =
-		Command("ls")
-			:cwd(ya.quote(H.state.actions_path))
-			:stdout(Command.PIPED)
-			:spawn()
+    -- stylua: ignore
+    local action_child, action_err =
+        Command("ls")
+            :cwd(ya.quote(H.state.actions_path))
+            :stdout(Command.PIPED)
+            :spawn()
     if H.flags.debug and action_err then ya.err("Aktionen load action err:" .. tostring(action_err)) end
 
     local action_infos = {
@@ -300,9 +301,9 @@ function H.center_layout(area, height)
     local _, current_layout, _ = table.unpack(ui.Layout()
         :direction(ui.Layout.HORIZONTAL)
         :constraints({
-            ui.Constraint.Ratio(MANAGER.ratio.parent, MANAGER.ratio.all),
-            ui.Constraint.Ratio(MANAGER.ratio.current, MANAGER.ratio.all),
-            ui.Constraint.Ratio(MANAGER.ratio.preview, MANAGER.ratio.all),
+            ui.Constraint.Ratio(rt.mgr.ratio.parent, rt.mgr.ratio.all),
+            ui.Constraint.Ratio(rt.mgr.ratio.current, rt.mgr.ratio.all),
+            ui.Constraint.Ratio(rt.mgr.ratio.preview, rt.mgr.ratio.all),
         })
         :split(area))
 

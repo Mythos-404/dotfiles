@@ -38,7 +38,7 @@ function M:peek(job)
             { tostring(math.max(0, i - limit)), only_if = tostring(job.file.url), upper_bound = "" }
         )
     else
-        lines = lines:gsub("\t", string.rep(" ", PREVIEW.tab_size))
+        lines = lines:gsub("\t", string.rep(" ", rt.preview.tab_size))
         ya.preview_widgets(job, { ui.Text.parse(lines):area(job.area) })
     end
 end

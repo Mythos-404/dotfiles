@@ -2619,7 +2619,7 @@ local toggle_ui = ya.sync(function(st)
         local style = self:style()
         local match_pattern = (st.match_pattern and st.opt_show_search_in_statusbar) and ":" .. st.match_pattern or ""
         return ui.Line({
-            ui.Span(THEME.status.separator_open):fg(style.bg),
+            ui.Span(th.status.separator_open):fg(style.bg),
             ui.Span("[SJ]" .. match_pattern .. " "):style(style),
         })
     end

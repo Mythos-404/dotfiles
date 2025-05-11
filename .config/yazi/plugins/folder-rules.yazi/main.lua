@@ -4,17 +4,17 @@ function M.setup()
     ps.sub("cd", function()
         local cwd = cx.active.current.cwd
         if cwd:ends_with("Downloads") then
-            ya.manager_emit("sort", { "modified", reverse = true, dir_first = false })
-            return
+            ya.mgr_emit("sort", { "mtime", reverse = false })
+            ya.mgr_emit("linemode", { "mtime" })
         else
-            ya.manager_emit("sort", { "natural", reverse = false, dir_first = true, sensitive = true })
+            ya.mgr_emit("sort", { "natural", reverse = false, dir_first = true, sensitive = true })
+            ya.mgr_emit("linemode", { "none" })
         end
 
         if cwd:ends_with(".dotfiles") then
-            ya.manager_emit("hidden", { "show" })
-            return
+            ya.mgr_emit("hidden", { "show" })
         else
-            ya.manager_emit("hidden", { "hide" })
+            ya.mgr_emit("hidden", { "hide" })
         end
     end)
 end
