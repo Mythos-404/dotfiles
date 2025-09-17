@@ -70,7 +70,9 @@
 in {
   imports = [
     inputs.home-manager.flakeModules.home-manager
+    inputs.pkgs-by-name-for-flake-parts.flakeModule
   ];
+
   flake = {
     nixosConfigurations =
       lib.mapAttrs' (
@@ -85,5 +87,9 @@ in {
           lib.nameValuePair name (mkHome name)
       )
       userNames;
+  };
+
+  perSystem = {
+    pkgsDirectory = ../../pkgs;
   };
 }
