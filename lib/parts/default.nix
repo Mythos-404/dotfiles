@@ -88,8 +88,4 @@ in {
       )
       userNames;
   };
-
-  perSystem = {
-    pkgsDirectory = ../../pkgs;
-  };
 }

@@ -9,6 +9,7 @@
       enable = true;
       device = "nodev";
       efiSupport = true;
+      theme = "/boot/grub/themes/Angle";
       extraEntries = ''
         menuentry "Windows" {
           search --file --no-floppy --set=root /EFI/Microsoft/Boot/bootmgfw.efi
