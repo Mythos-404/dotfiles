@@ -3,7 +3,7 @@
 in {
   users.users.${userName} = {
     isNormalUser = true;
-    extraGroups = ["wheel"];
+    extraGroups = ["wheel" "docker"];
   };
 
   userConfig = {

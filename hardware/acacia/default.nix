@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  lpkgs = import ../../pkgs {inherit pkgs;};
+in {
   imports = [
     ./hardware-configuration.nix
     ./nvidia.nix
@@ -9,7 +11,7 @@
       enable = true;
       device = "nodev";
       efiSupport = true;
-      theme = "/boot/grub/themes/Angle";
+      theme = lpkgs.grub-theme-angle;
       extraEntries = ''
         menuentry "Windows" {
           search --file --no-floppy --set=root /EFI/Microsoft/Boot/bootmgfw.efi
@@ -45,7 +47,8 @@
     xwayland.enable = true;
   };
   services.displayManager.sddm = {
-    enable = true;
+    enable = false;
     wayland.enable = true;
   };
+  virtualisation.docker.enable = true;
 }
