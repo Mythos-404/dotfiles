@@ -8,13 +8,13 @@
           description = "用户名";
         };
 
-        homeManagerModules = lib.mkOption {
+        homeModules = lib.mkOption {
           type = lib.types.listOf lib.types.str;
           default = [];
           description = "Home Manager 额外模块列表";
         };
 
-        profile = lib.mkOption {
+        profiles = lib.mkOption {
           type = lib.types.listOf lib.types.str;
           default = [];
           description = "用户配置档案列表";

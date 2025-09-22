@@ -1,11 +1,7 @@
-{
-  inputs,
-  config,
-  ...
-}: let
+{inputs, ...}: let
   inherit (inputs.nixpkgs) lib;
 
-  genConfig = import ./genConfigModules.nix {inherit lib;};
+  genConfig = import ./genConfigModules.nix {inherit lib inputs;};
 
   systemDir = builtins.readDir ../../systems;
   systemFiles =
@@ -15,17 +11,18 @@
     )
     systemDir;
 
-  userDir = builtins.readDir ../../users;
-  userNames =
-    lib.filterAttrs (
-      name: type:
-        type == "directory"
-    )
-    userDir;
-
   mkSystem = systemFileName: let
+    systemName = lib.removeSuffix ".nix" systemFileName;
     systemConfig = import ../../systems/${systemFileName};
-    systemModules = genConfig.generateSystemModules systemFileName (systemConfig.systemConfig or {});
+
+    userModules =
+      genConfig.generateUserModules
+      systemName
+      (systemConfig.systemConfig.users or []);
+
+    systemModules =
+      genConfig.generateSystemModules
+      (systemConfig.systemConfig or {});
   in
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
@@ -52,30 +49,13 @@
           }
 
           ../../systems/${systemFileName}
-        ]
-        ++ systemModules;
-    };
 
-  mkHome = userDirName: let
-    userConfig = import ../../users/${userDirName}/base.nix;
-    userModules = genConfig.generateUserModules userDirName (userConfig.userConfig or {});
-  in
-    inputs.home-manager.lib.homeManagerConfiguration {
-      specialArgs = {
-        inherit inputs lib;
-      };
-
-      modules =
-        [
-          ./userConfigFramework.nix
+          inputs.home-manager.nixosModules.home-manager
         ]
+        ++ systemModules
         ++ userModules;
     };
 in {
-  imports = [
-    inputs.home-manager.flakeModules.home-manager
-  ];
-
   flake = {
     nixosConfigurations =
       lib.mapAttrs' (
@@ -83,12 +63,5 @@ in {
           lib.nameValuePair (lib.removeSuffix ".nix" name) (mkSystem name)
       )
       systemFiles;
-
-    homeConfigurations =
-      lib.mapAttrs' (
-        name: _:
-          lib.nameValuePair name (mkHome name)
-      )
-      userNames;
   };
 }
