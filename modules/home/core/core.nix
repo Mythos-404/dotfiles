@@ -2,7 +2,6 @@
   home.packages = with pkgs; [
     # Misc
     gnupg
-    gnumake
 
     # Modern cli tools, replacement of grep/sed/...
 
@@ -20,7 +19,6 @@
     sad # CLI search and replace, just like sed, but with diff preview.
     yq-go # yaml processor https://github.com/mikefarah/yq
     jq # json processor https://stedolan.github.io/jq/
-    just # a command runner like make, but simpler
     hyperfine # command-line benchmarking tool
     gping # ping, but with a graph(TUI)
     doggo # DNS client for humans
