@@ -19,6 +19,7 @@
 
     sad # CLI search and replace, just like sed, but with diff preview.
     yq-go # yaml processor https://github.com/mikefarah/yq
+    jq # json processor https://stedolan.github.io/jq/
     just # a command runner like make, but simpler
     hyperfine # command-line benchmarking tool
     gping # ping, but with a graph(TUI)
@@ -45,8 +46,8 @@
   programs.eza = {
     enable = true;
     git = true;
-    icons = "auto";
-    color = "auto";
+    icons = "always";
+    colors = true;
     extraOptions = ["--group-directories-first"];
   };
 

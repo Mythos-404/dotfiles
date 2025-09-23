@@ -6,6 +6,7 @@
     if builtins.pathExists ../../modules/${module}.nix
     then ../../modules/${module}.nix
     else ../../modules/${module};
+  mylib = import ../default.nix {inherit lib;};
 in {
   generateUserModules = systemName: users:
     lib.flatten (
@@ -21,6 +22,7 @@ in {
           userConfig = (import baseConfigPath).userConfig;
 
           homeManagerConfigPath = {
+            home-manager.extraSpecialArgs = {mylib = mylib;};
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.${userName}.imports = map moduleResolver userConfig.homeModules or [];

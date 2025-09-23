@@ -1,6 +1,6 @@
 {inputs, ...}: let
   inherit (inputs.nixpkgs) lib;
-  mylib = import ../lib {inherit lib;};
+  mylib = import ../default.nix {inherit lib;};
 
   genConfig = import ./genConfigModules.nix {inherit lib inputs;};
 
