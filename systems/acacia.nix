@@ -10,13 +10,9 @@
     ];
 
     modules = [
-      "core/nix"
-      "core/i18n"
-      "core/fonts"
+      "core"
 
       "desktop/peripherals"
-
-      # "services/kmscon"
     ];
   };
 

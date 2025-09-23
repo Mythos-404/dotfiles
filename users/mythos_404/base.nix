@@ -16,7 +16,7 @@ in {
     userName = userName;
 
     homeModules = [
-      "home/home"
+      "home/core"
     ];
   };
 }
