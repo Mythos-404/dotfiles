@@ -43,15 +43,20 @@
         [
           ./systemConfigFramework.nix
           ./userConfigFramework.nix
+          inputs.home-manager.nixosModules.home-manager
 
           {
             nixpkgs.config.allowUnfree = true;
             nixpkgs.hostPlatform = systemConfig.systemConfig.architecture or "x86_64-linux";
           }
 
-          ../../systems/${systemFileName}
+          {
+            home-manager.extraSpecialArgs = {
+              inherit mylib inputs;
+            };
+          }
 
-          inputs.home-manager.nixosModules.home-manager
+          ../../systems/${systemFileName}
         ]
         ++ systemModules
         ++ userModules;

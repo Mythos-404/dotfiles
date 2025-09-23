@@ -1,8 +1,8 @@
-{ catppuccin, ... }:
+{ inputs, ... }:
 {
   # https://github.com/catppuccin/nix
   imports = [
-    catppuccin.homeModules.catppuccin
+    inputs.catppuccin.homeModules.catppuccin
   ];
 
   catppuccin = {
