@@ -1,5 +1,6 @@
 {inputs, ...}: let
   inherit (inputs.nixpkgs) lib;
+  mylib = import ../lib {inherit lib;};
 
   genConfig = import ./genConfigModules.nix {inherit lib inputs;};
 
@@ -26,7 +27,7 @@
   in
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit inputs lib;
+        inherit inputs lib mylib;
 
         pkgs-stable = import inputs.nixpkgs {
           system = systemConfig.systemConfig.architecture or "x86_64-linux";
