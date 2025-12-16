@@ -21,7 +21,13 @@
         modules = lib.mkOption {
           type = lib.types.listOf lib.types.str;
           default = [];
-          description = "额外模块列表";
+          description = "系统模块列表";
+        };
+
+        inputOverride = lib.mkOption {
+          type = lib.types.attrs;
+          default = {};
+          description = "覆盖和添加特定的 flake inputs";
         };
       };
     };

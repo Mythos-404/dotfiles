@@ -1,6 +1,4 @@
-{pkgs, ...}: let
-  lpkgs = import ../../pkgs {inherit pkgs;};
-in {
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
     ./nvidia.nix
@@ -11,7 +9,7 @@ in {
       enable = true;
       device = "nodev";
       efiSupport = true;
-      theme = lpkgs.grub-theme-angle;
+      theme = pkgs.grub-theme-angle;
       extraEntries = ''
         menuentry "Windows" {
           search --file --no-floppy --set=root /EFI/Microsoft/Boot/bootmgfw.efi

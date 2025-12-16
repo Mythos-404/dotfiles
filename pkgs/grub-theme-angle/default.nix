@@ -1,11 +1,12 @@
-{stdenv}:
-stdenv.mkDerivation {
-  pname = "grub-theme-angle";
-  version = "1.0.0";
+{pkgs, ...}: {
+  package = pkgs.stdenv.mkDerivation {
+    pname = "grub-theme-angle";
+    version = "1.0.0";
 
-  src = ./theme;
+    src = ./theme;
 
-  installPhase = ''
-    cp -r $src $out
-  '';
+    installPhase = ''
+      cp -r $src $out
+    '';
+  };
 }

@@ -4,14 +4,13 @@
       options = {
         userName = lib.mkOption {
           type = lib.types.str;
-          default = "";
           description = "用户名";
         };
 
         homeModules = lib.mkOption {
           type = lib.types.listOf lib.types.str;
           default = [];
-          description = "Home Manager 额外模块列表";
+          description = "Home Manager 模块列表";
         };
 
         profiles = lib.mkOption {

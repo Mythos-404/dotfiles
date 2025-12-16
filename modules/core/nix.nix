@@ -8,6 +8,7 @@
   nix.settings = {
     auto-optimise-store = true;
     experimental-features = [
+      "pipe-operators"
       "nix-command"
       "flakes"
     ];
