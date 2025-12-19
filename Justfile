@@ -247,18 +247,12 @@ tree:
 ############################################################################
 
 alias ggc := git-gc
-alias ga := git-amend
 
 # 清理 git reflog 和不可达对象
 [group("git")]
 git-gc:
     git reflog expire --expire-unreachable=now --all
     git gc --prune=now
-
-# 修改上次提交 (不改消息)
-[group("git")]
-git-amend:
-    git commit --amend -a --no-edit
 
 ############################################################################
 #
