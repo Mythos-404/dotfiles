@@ -138,7 +138,7 @@ gc-full:  clean gc
 
 # 更新 flake 输入
 [group("nix")]
-up input:
+up input="":
     nix flake update --commit-lock-file {{input}}
 
 # 格式化代码
