@@ -50,8 +50,8 @@
 
     mergedInputs = inputs // (systemConfig.systemConfig.inputsOverride or {});
 
-    userModules = genModules.generateUserModules systemName (systemConfig.systemConfig.users or []);
-    systemModules = genModules.generateSystemModules (systemConfig.systemConfig or {});
+    userModules = genModules.generateUserModules systemName architecture (systemConfig.systemConfig.users or []);
+    systemModules = genModules.generateSystemModules architecture (systemConfig.systemConfig or {});
 
     buildSystemConfig =
       if extendedLib.arch.isDarwin architecture

@@ -2,12 +2,25 @@
   lib,
   inputs,
 }: let
-  moduleResolver = module:
-    if builtins.pathExists ../modules/${module}.nix
-    then ../modules/${module}.nix
-    else ../modules/${module};
+  moduleResolver = basePath: architecture: module: let
+    platform' = lib.arch.getPlatformType architecture;
+    platform =
+      if platform' == "linux"
+      then "nixos"
+      else platform';
+    platformPath = ./${basePath}/${platform}/${module};
+    platformPathNix = ./${basePath}/${platform}/${module}.nix;
+  in
+    if builtins.pathExists platformPathNix
+    then platformPathNix
+    else if builtins.pathExists platformPath
+    then platformPath
+    else throw "Module not found: ${platformPath}(.nix)";
+
+  systemModuleResolver = moduleResolver "../modules/system";
+  homeModuleResolver = moduleResolver "../modules/home";
 in {
-  generateUserModules = systemName: users:
+  generateUserModules = systemName: architecture: users:
     users
     |> lib.map (
       userName: let
@@ -23,9 +36,14 @@ in {
         homeManagerConfigPath = {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.${userName}.imports = map moduleResolver userConfig.homeModules or [];
+          home-manager.users.${userName}.imports =
+            [../modules/home/base]
+            ++ (
+              (userConfig.homeModules or [])
+              |> map (module: homeModuleResolver architecture module)
+            );
         };
-        profileModules = map (profile: userDir + "/profiles/${profile}.nix") userConfig.profiles or [];
+        profileModules = map (profile: userDir + "/profiles/${profile}.nix") (userConfig.profiles or []);
 
         systemConfigPath = userDir + "/per-system/${systemName}.nix";
         systemConfig =
@@ -37,10 +55,14 @@ in {
     )
     |> lib.flatten;
 
-  generateSystemModules = systemConfig: let
+  generateSystemModules = architecture: systemConfig: let
     hardwareModule = ../hardware/${systemConfig.hardwareName};
-
-    extraModules = map moduleResolver systemConfig.modules;
+    extraModules =
+      [../modules/system/base]
+      ++ (
+        (systemConfig.modules or [])
+        |> map (systemModuleResolver architecture)
+      );
   in
     [hardwareModule] ++ extraModules;
 }
