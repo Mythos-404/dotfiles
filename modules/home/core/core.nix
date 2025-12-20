@@ -45,7 +45,7 @@
     enable = true;
     git = true;
     icons = "always";
-    colors = true;
+    colors = "always";
     extraOptions = ["--group-directories-first"];
   };
 
@@ -99,6 +99,7 @@
     enableBashIntegration = true;
     enableZshIntegration = true;
   };
+  programs.bash.enable = true;
 
   # Atuin replaces your existing shell history with a SQLite database,
   # and records additional context for your commands.

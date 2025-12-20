@@ -25,6 +25,8 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  networking.networkmanager.enable = true;
+
   environment.systemPackages = with pkgs; [
     neovim
     wget

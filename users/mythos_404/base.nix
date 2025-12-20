@@ -3,7 +3,7 @@ let
 in {
   users.users.${userName} = {
     isNormalUser = true;
-    extraGroups = ["wheel" "docker"];
+    extraGroups = ["wheel" "docker" "networkmanager"];
   };
 
   home-manager.users.${userName} = {
