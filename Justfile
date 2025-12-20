@@ -95,6 +95,7 @@ rollback:
 alias h := history
 alias c := clean
 alias gf := gc-full
+alias up := update
 alias r := repl
 alias ch := check
 alias i := info
@@ -138,8 +139,10 @@ gc-full:  clean gc
 
 # 更新 flake 输入
 [group("nix")]
-up input="":
-    nix flake update --commit-lock-file {{input}}
+update input="":
+    nix flake update {{input}}
+    @git add flake.lock
+    @git commit -m "chore: update flake lock file" > /dev/null || echo "⚠️ 无更改需要提交"
 
 # 格式化代码
 [group("nix")]
