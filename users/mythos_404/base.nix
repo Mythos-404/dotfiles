@@ -3,7 +3,7 @@ let
 in {
   users.users.${userName} = {
     isNormalUser = true;
-    extraGroups = ["wheel" "docker" "networkmanager"];
+    extraGroups = ["wheel"];
   };
 
   home-manager.users.${userName} = {
@@ -16,7 +16,7 @@ in {
     userName = userName;
 
     homeModules = [
-      "home/core"
+      "core"
     ];
   };
 }

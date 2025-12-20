@@ -11,8 +11,10 @@
 
     modules = [
       "core"
+      "desktop"
 
-      "desktop/peripherals"
+      "services/kmscon"
+      "services/virtualisation"
     ];
   };
 

@@ -28,17 +28,12 @@
   networking.networkmanager.enable = true;
 
   environment.systemPackages = with pkgs; [
-    neovim
-    wget
     kitty
-    git
     vscode.fhs
     firefox
     alejandra
     nil
     direnv
-    perl
-    gnumake
   ];
 
   programs.hyprland = {
@@ -46,9 +41,4 @@
     withUWSM = true;
     xwayland.enable = true;
   };
-  services.displayManager.sddm = {
-    enable = false;
-    wayland.enable = true;
-  };
-  virtualisation.docker.enable = true;
 }
