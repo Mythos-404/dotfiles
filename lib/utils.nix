@@ -13,4 +13,9 @@
         ) (builtins.readDir path)
       )
     );
+
+  mergeUserGroups = config: groups:
+    (config.systemConfig.users or [])
+    |> map (username: {${username}.extraGroups = groups;})
+    |> lib.mkMerge;
 }
