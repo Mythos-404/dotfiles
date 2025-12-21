@@ -28,8 +28,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    pre-commit-hooks = {
+    git-hooks-nix = {
       url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -48,6 +53,8 @@
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         ./parts/systems.nix
+
+        ./parts/perSystem.nix
       ];
 
       systems = [
