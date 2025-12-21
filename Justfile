@@ -3,14 +3,7 @@ set shell := ["bash", "-c"]
 default:
     @just --list
 
-systems := if os() == "linux" {
-    `nix eval .#nixosConfigurations --apply 'x: builtins.concatStringsSep "\n" (builtins.attrNames x)' --raw 2> /dev/null || true`
-} else if os() == "darwin" {
-    `nix eval .#darwinConfigurations --apply 'x: builtins.concatStringsSep "\n" (builtins.attrNames x)' --raw 2> /dev/null || true`
-} else {
-    ""
-}
-
+systems := if os() == "linux" { `nix eval .#nixosConfigurations --apply 'x: builtins.concatStringsSep "\n" (builtins.attrNames x)' --raw 2> /dev/null || true` } else if os() == "darwin" { `nix eval .#darwinConfigurations --apply 'x: builtins.concatStringsSep "\n" (builtins.attrNames x)' --raw 2> /dev/null || true` } else { "" }
 deploys := `find deploys -name '*.nix' -exec basename {} .nix \; 2> /dev/null || true`
 
 ############################################################################
@@ -31,58 +24,58 @@ alias rb := rollback
 list:
     #!/usr/bin/env bash
     echo "可用的系统配置:"
-    for system in "{{systems}}"; do
+    for system in "{{ systems }}"; do
         echo " - ${system}";
     done
 
 # 构建并切换到指定的系统配置
-[linux]
 [group("system")]
+[linux]
 use system *flargs="": (_check-system system)
-    @sudo nixos-rebuild switch --flake .#{{system}} {{flargs}}
+    @sudo nixos-rebuild switch --flake .#{{ system }} {{ flargs }}
 
 # 构建并切换到指定的系统配置
-[macos]
 [group("system")]
+[macos]
 use system:
-    @sudo darwin-rebuild switch --flake .#{{system}} {{flargs}}
+    @sudo darwin-rebuild switch --flake .#{{ system }} {{ flargs }}
 
 # 构建系统但不切换 (下次启动生效)
-[linux]
 [group("system")]
+[linux]
 boot system *flargs="": (_check-system system)
-    @sudo nixos-rebuild boot --flake .#{{system}} {{flargs}}
+    @sudo nixos-rebuild boot --flake .#{{ system }} {{ flargs }}
 
 # 测试系统配置 (临时切换，重启后恢复)
-[linux]
 [group("system")]
+[linux]
 test system *flargs="": (_check-system system)
-    @sudo nixos-rebuild test --flake .#{{system}} {{flargs}}
+    @sudo nixos-rebuild test --flake .#{{ system }} {{ flargs }}
 
 # 根据当前主机名自动部署
 [group("system")]
-local mode="switch":  (_check-hostname)
+local mode="switch": _check-hostname
     #!/usr/bin/env bash
     hostname=$(hostname -s)
     echo "🔧 检测到主机名: ${hostname}"
-    
-    if [[ "{{os()}}" == "linux" ]]; then
-        echo "🐧 使用 nixos-rebuild {{mode}}"
-        sudo nixos-rebuild {{mode}} --flake .#${hostname} --show-trace
-    elif [[ "{{os()}}" == "darwin" ]]; then
-        echo "🍎 使用 darwin-rebuild {{mode}}"
-        sudo darwin-rebuild {{mode}} --flake .#${hostname}
+
+    if [[ "{{ os() }}" == "linux" ]]; then
+        echo "🐧 使用 nixos-rebuild {{ mode }}"
+        sudo nixos-rebuild {{ mode }} --flake .#${hostname} --show-trace
+    elif [[ "{{ os() }}" == "darwin" ]]; then
+        echo "🍎 使用 darwin-rebuild {{ mode }}"
+        sudo darwin-rebuild {{ mode }} --flake .#${hostname}
     fi
 
 # 回滚到上一个配置
-[linux]
 [group("system")]
+[linux]
 rollback:
     @sudo nixos-rebuild switch --rollback
 
 # 回滚到上一个配置
-[macos]
 [group("system")]
+[macos]
 rollback:
     @sudo darwin-rebuild rollback
 
@@ -134,13 +127,13 @@ gc:
 # 先清理历史再垃圾回收（推荐）
 [confirm("确认执行完整清理 (清理历史 + 垃圾回收)? yes/[no]: ")]
 [group("nix")]
-gc-full:  clean gc
+gc-full: clean gc
     @echo "✅ 完整清理完成"
 
 # 更新 flake 输入
 [group("nix")]
 update input="":
-    nix flake update {{input}}
+    nix flake update {{ input }}
     @git add flake.lock
     @git commit -m "chore: update flake lock file" > /dev/null || echo "⚠️ 无更改需要提交"
 
@@ -148,14 +141,7 @@ update input="":
 [group("nix")]
 fmt:
     @echo "✨ 格式化代码..."
-    @if command -v treefmt &> /dev/null; then \
-        treefmt; \
-    elif command -v alejandra &> /dev/null; then \
-        alejandra .; \
-    else \
-        echo "❌ 未找到格式化工具 (treefmt 或 alejandra)"; \
-        exit 1; \
-    fi
+    @nix fmt
 
 # 用 flake 打开 nix repl
 [group("nix")]
@@ -188,7 +174,7 @@ verify:
 [group("nix")]
 repair *paths:
     @echo "🔧 修复 Nix Store 条目..."
-    nix store repair {{paths}}
+    nix store repair {{ paths }}
 
 ############################################################################
 #
@@ -204,7 +190,7 @@ alias d := deploy
 deploy-list:
     #!/usr/bin/env bash
     echo "可用的部署配置:"
-    for deploy in "{{deploys}}"; do
+    for deploy in "{{ deploys }}"; do
         if [ -f "deploys/${deploy}.nix" ]; then
             echo "  ${deploy} - $(grep 'hostname.*=' deploy/${deploy}.nix | cut -d '"' -f2)"
         fi
@@ -212,9 +198,9 @@ deploy-list:
 
 # 部署到指定目标
 [group("deploy")]
-deploy target:  (_check-deploy target)
-    @echo "部署到目标: {{target}}"
-    nix run github:serokell/deploy-rs -- . #{{target}}
+deploy target: (_check-deploy target)
+    @echo "部署到目标: {{ target }}"
+    nix run github:serokell/deploy-rs -- . #{{ target }}
 
 ############################################################################
 #
@@ -268,8 +254,8 @@ git-gc:
 [private]
 _check-system system:
     #!/usr/bin/env bash
-    if ! nix eval .#nixosConfigurations --apply 'x: builtins.hasAttr "{{system}}" x' 2>/dev/null | grep -q true; then
-        echo "❌ 错误: 无法找到系统配置 '{{system}}'."
+    if ! nix eval .#nixosConfigurations --apply 'x: builtins.hasAttr "{{ system }}" x' 2>/dev/null | grep -q true; then
+        echo "❌ 错误: 无法找到系统配置 '{{ system }}'."
         just ls
         exit 1
     fi
@@ -279,8 +265,8 @@ _check-system system:
 [private]
 _check-system system:
     #!/usr/bin/env bash
-    if ! nix eval .#darwinConfigurations --apply 'x: builtins.hasAttr "{{system}}" x' 2>/dev/null | grep -q true; then
-        echo "❌ 错误: 无法找到系统配置 '{{system}}'."
+    if ! nix eval .#darwinConfigurations --apply 'x: builtins.hasAttr "{{ system }}" x' 2>/dev/null | grep -q true; then
+        echo "❌ 错误: 无法找到系统配置 '{{ system }}'."
         just ls
         exit 1
     fi
@@ -289,11 +275,11 @@ _check-system system:
 [private]
 _check-deploy target:
     #!/usr/bin/env bash
-    if [ !  -f "deploys/{{target}}.nix" ]; then
-        echo "❌ 错误: 部署配置 deploys/{{target}}.nix 不存在"
+    if [ !  -f "deploys/{{ target }}.nix" ]; then
+        echo "❌ 错误: 部署配置 deploys/{{ target }}.nix 不存在"
         echo ""
         echo "可用的部署目标:"
-        for deploy in "{{deploys}}"; do
+        for deploy in "{{ deploys }}"; do
             echo "  ${deploy}"
         done
         exit 1
@@ -305,19 +291,19 @@ _check-hostname:
     #!/usr/bin/env bash
     hostname=$(hostname -s)
     has_config=false
-    
-    for system in "{{systems}}"; do
+
+    for system in "{{ systems }}"; do
         if [ "${system}" = "${hostname}" ]; then
             has_config=true
             break
         fi
     done
-    
+
     if [ "${has_config}" = false ]; then
         echo "❌ 错误:  未找到主机名 '${hostname}' 对应的配置"
         echo ""
         echo "可用的系统配置:"
-        for system in "{{systems}}"; do
+        for system in "{{ systems }}"; do
             echo "  - ${system}"
         done
         exit 1
