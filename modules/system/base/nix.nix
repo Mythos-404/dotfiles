@@ -21,11 +21,15 @@
 
       "https://nix-community.cachix.org"
       "https://mythos-404.cachix.org"
+
+      "https://yazi.cachix.org"
     ];
 
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "mythos-404.cachix.org-1:36HDeOT4aBoHWP/rtV2aY+m887BTKwKvygGBW9K13us="
+
+      "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
     ];
     builders-use-substitutes = true;
   };

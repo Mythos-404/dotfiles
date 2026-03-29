@@ -23,22 +23,6 @@
     };
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto;
   networking.networkmanager.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    kitty
-    vscode.fhs
-    firefox
-    alejandra
-    nil
-    direnv
-  ];
-
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
-    xwayland.enable = true;
-  };
 }

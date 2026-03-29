@@ -111,7 +111,14 @@
           ./options/user.nix
 
           {
-            nixpkgs.overlays = [packages.overlay];
+            nixpkgs.overlays = [
+              packages.overlay
+
+              inputs.nix-cachyos-kernel.overlays.default
+              inputs.nix4vscode.overlays.default
+
+              inputs.yazi.overlays.default
+            ];
           }
           packages.module
 
