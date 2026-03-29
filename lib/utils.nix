@@ -1,18 +1,18 @@
 {lib, ...}: {
   relativeToRoot = lib.path.append ../.;
+
   scanPaths = path:
-    builtins.map (f: (path + "/${f}")) (
-      builtins.attrNames (
-        lib.attrsets.filterAttrs (
-          path: _type:
-            (_type == "directory")
-            || (
-              (path != "default.nix")
-              && (lib.strings.hasSuffix ".nix" path)
-            )
-        ) (builtins.readDir path)
-      )
-    );
+    builtins.readDir path
+    |> lib.attrsets.filterAttrs (
+      path: type:
+        (type == "directory")
+        || (
+          (path != "default.nix")
+          && (lib.strings.hasSuffix ".nix" path)
+        )
+    )
+    |> builtins.attrNames
+    |> builtins.map (f: (path + "/${f}"));
 
   mergeUserGroups = config: groups:
     (config.systemConfig.users or [])

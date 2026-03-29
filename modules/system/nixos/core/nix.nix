@@ -1,6 +1,6 @@
 {lib, ...}: {
   # Allow unfree packages
-  nixpkgs.config.alowUnfree = lib.mkForce true;
+  nixpkgs.config.allowUnfree = lib.mkForce true;
 
   # do garbage collection weekly to keep disk usage low
   nix.gc = {

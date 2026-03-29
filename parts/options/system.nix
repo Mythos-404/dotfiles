@@ -24,7 +24,7 @@
           description = "系统模块列表";
         };
 
-        inputOverride = lib.mkOption {
+        inputsOverride = lib.mkOption {
           type = lib.types.attrs;
           default = {};
           description = "覆盖和添加特定的 flake inputs";
