@@ -1,31 +1,5 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    # Misc
-    gnupg
-
-    # Modern cli tools, replacement of grep/sed/...
-
-    # Interactively filter its input using fuzzy searching, not limit to filenames.
-    fzf
-    # search for files by name, faster than find
-    fd
-    # search for files by its content, replacement of grep
-    (ripgrep.override {withPCRE2 = true;})
-
-    # A fast and polyglot tool for code searching, linting, rewriting at large scale
-    # supported languages: only some mainstream languages currently(do not support nix/nginx/yaml/toml/...)
-    ast-grep
-
-    sad # CLI search and replace, just like sed, but with diff preview.
-    yq-go # yaml processor https://github.com/mikefarah/yq
-    jq # json processor https://stedolan.github.io/jq/
-    hyperfine # command-line benchmarking tool
-    gping # ping, but with a graph(TUI)
-    doggo # DNS client for humans
-    duf # Disk Usage/Free Utility - a better 'df' alternative
-    dust # A more intuitive version of `du` in rust
-    gdu # disk usage analyzer(replacement of `du`)
-
     # nix related
     #
     # it provides the command `nom` works just like `nix
@@ -38,6 +12,13 @@
     nix-melt # A TUI flake.lock viewer
     # https://github.com/utdemir/nix-tree
     nix-tree # A TUI to visualize the dependency graph of a nix derivation
+
+    # misc
+    gnupg
+    caddy # A webserver with automatic HTTPS via Let's Encrypt(replacement of nginx)
+    # A fast and polyglot tool for code searching, linting, rewriting at large scale
+    # supported languages: only some mainstream languages currently(do not support nix/nginx/yaml/toml/...)
+    ast-grep
   ];
 
   # A modern replacement of `ls`
@@ -99,7 +80,6 @@
     enableBashIntegration = true;
     enableZshIntegration = true;
   };
-  programs.bash.enable = true;
 
   # Atuin replaces your existing shell history with a SQLite database,
   # and records additional context for your commands.
@@ -109,5 +89,8 @@
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+    settings = {
+      enter_accept = true;
+    };
   };
 }
