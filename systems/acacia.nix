@@ -13,7 +13,7 @@
       "core"
       "desktop"
 
-      "services/kmscon"
+      # "services/kmscon"
       "services/virtualisation"
     ];
   };
