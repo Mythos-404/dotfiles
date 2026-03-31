@@ -2,7 +2,7 @@
   monitor = [
     "DP-5,3840x2160@150.0,0x0,1.25,bitdepth,10"
   ];
-  workspaces = [
+  workspace = [
     "1,monitor:DP-5,default:true"
     "2,monitor:DP-5"
     "3,monitor:DP-5"

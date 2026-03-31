@@ -1,2 +1,2 @@
 {lib, ...}:
-lib.mkMerge (lib.utils.scanPaths ./.)
+lib.mkMerge (map import (lib.utils.scanPaths ./.))

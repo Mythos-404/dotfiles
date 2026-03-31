@@ -12,6 +12,7 @@
     modules = [
       "core"
       "desktop"
+      "desktop/hyprland"
 
       # "services/kmscon"
       "services/virtualisation"

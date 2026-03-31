@@ -1,11 +1,4 @@
 {
-  gesture = [
-    "gesture = 3, swipe, move"
-    "gesture = 3, pinch, float"
-    "gesture = 4, horizontal, workspace"
-    "gesture = 4, up, dispatcher, global, quickshell:overviewWorkspacesToggle"
-    "gesture = 4, down, dispatcher, global, quickshell:overviewWorkspacesClose"
-  ];
   gestures = {
     workspace_swipe_distance = 700;
     workspace_swipe_cancel_ratio = 0.2;
