@@ -1,2 +1,2 @@
 {lib, ...}:
-lib.mkMerge (lib.utils.scanPaths ./.)
+builtins.foldl' (acc: f: acc // (import f)) {} (lib.utils.scanPaths ./.)

@@ -7,8 +7,8 @@
           name = lib.removeSuffix ".nix" name;
           path =
             if type == "directory"
-            then "${packagesDir}/${name}"
-            else "${packagesDir}/${name}.nix";
+            then packagesDir + "/${name}"
+            else packagesDir + "/${name}.nix";
         }
       );
 

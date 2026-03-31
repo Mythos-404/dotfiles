@@ -2,7 +2,8 @@
   yaziPlugins = pkgs.fetchFromGitHub {
     owner = "yazi-rs";
     repo = "plugins";
-    rev = "4e55902";
+    rev = "1962818";
+    hash = "sha256-pAkBlodci4Yf+CTjhGuNtgLOTMNquty7xP0/HSeoLzE=";
   };
 in {
   programs.yazi = {
@@ -237,6 +238,7 @@ in {
         owner = "wylie102";
         repo = "duckdb.yazi";
         rev = "3f8c863";
+        hash = "sha256-XQM459V3HbPgXKgd9LnAIKRQOAaJPdZA/Tp91TSGHqY=";
       };
     };
 
