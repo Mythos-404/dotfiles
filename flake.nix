@@ -51,6 +51,16 @@
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel";
 
     yazi.url = "github:sxyazi/yazi";
+
+    anyrun = {
+      url = "github:anyrun-org/anyrun";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/quickshell/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}:
