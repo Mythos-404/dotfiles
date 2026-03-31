@@ -22,6 +22,7 @@
     userDirs = {
       enable = true;
       createDirectories = true;
+      setSessionVariables = true;
 
       desktop = "dkt";
       documents = "doc";
@@ -33,7 +34,7 @@
       videos = "vid";
 
       extraConfig = {
-        XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
+        SCREENSHOTS = "${config.xdg.userDirs.pictures}/Screenshots";
       };
     };
   };

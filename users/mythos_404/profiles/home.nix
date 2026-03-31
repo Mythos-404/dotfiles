@@ -5,5 +5,10 @@ in {
     home.username = userName;
     home.homeDirectory = "/home/${userName}";
     home.stateVersion = "25.05";
+
+    programs.git.settings = {
+      user.email = "mythos_404@outlook.com";
+      user.name = "mythos_404";
+    };
   };
 }
