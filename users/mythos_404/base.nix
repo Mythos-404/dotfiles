@@ -10,6 +10,7 @@
     homeModules = [
       "desktop/base"
       "desktop/hyprland"
+      "desktop/quickshell"
 
       "services/udiskie"
       "services/playerctl"
