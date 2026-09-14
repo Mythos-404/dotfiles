@@ -10,5 +10,8 @@
         zulu
       ];
     })
+
+    teamspeak6-client
+    ayugram-desktop
   ];
 }
