@@ -53,15 +53,14 @@
     name = "gamemode-toggle";
     runtimeInputs = with pkgs; [hyprland jq libnotify];
     text = ''
-      GAMEMODE=$(hyprctl -j getoption animations:enabled | jq '.int')
-      if [[ "$GAMEMODE" == "1" ]]; then
-        hyprctl --batch "\
-          keyword animations:enabled 0;\
-          keyword decoration:blur:enabled 0;\
-          keyword general:gaps_in 0;\
-          keyword general:gaps_out 0;\
-          keyword general:border_size 1;\
-          keyword decoration:rounding 0"
+      GAMEMODE=$(hyprctl -j getoption animations:enabled | jq -r '.bool // (.int == 1)')
+      if [[ "$GAMEMODE" == "true" ]]; then
+        hyprctl eval 'hl.config({
+          animations = { enabled = false },
+          decoration = { blur = { enabled = false }, rounding = 0 },
+          general = { gaps_in = 0, gaps_out = 0, border_size = 1 }
+        })
+        hl.exec_scheduled_prop_refresh_immediately()'
         notify-send -e -u low "Game Mode ON"
       else
         hyprctl reload
@@ -73,18 +72,22 @@
   # ── 工作区交换 ──────────────────────────────────────
   swap-workspace = pkgs.writeShellApplication {
     name = "swap-workspace";
-    runtimeInputs = with pkgs; [hyprland jq findutils];
+    runtimeInputs = with pkgs; [hyprland];
     text = ''
-      CURRENT_WS=$(hyprctl activeworkspace -j | jq -r ".id")
-      TARGET_WS="$1"
-
-      CURRENT_WINS=$(hyprctl clients -j | jq -r --arg id "$CURRENT_WS" \
-        '.[] | select(.workspace.id == ($id | tonumber)) | .address')
-      TARGET_WINS=$(hyprctl clients -j | jq -r --arg id "$TARGET_WS" \
-        '.[] | select(.workspace.id == ($id | tonumber)) | .address')
-
-      echo "$CURRENT_WINS" | xargs -I {} hyprctl dispatch movetoworkspacesilent "$TARGET_WS,address:{}"
-      echo "$TARGET_WINS" | xargs -I {} hyprctl dispatch movetoworkspacesilent "$CURRENT_WS,address:{}"
+      hyprctl eval "
+      local target_id = ''${1:-0}
+      if target_id < 1 then return end
+      local cur = hl.get_active_workspace()
+      local target = hl.get_workspace(tostring(target_id))
+      local cur_wins = hl.get_workspace_windows(cur)
+      local target_wins = target and hl.get_workspace_windows(target) or {}
+      for _, w in ipairs(target_wins) do
+        hl.dispatch(hl.dsp.window.move({ workspace = tostring(cur.id), window = w, follow = false }))
+      end
+      for _, w in ipairs(cur_wins) do
+        hl.dispatch(hl.dsp.window.move({ workspace = tostring(target_id), window = w, follow = false }))
+      end
+      "
     '';
   };
 
@@ -106,10 +109,10 @@
 
       if [[ "$COUNT" -eq 0 ]]; then
         # 窗口不存在，启动它
-        hyprctl dispatch exec "$CMD"
+        hyprctl dispatch "hl.dsp.exec_cmd($(jq -Rn --arg c "$CMD" '$c'))"
       else
         # 窗口存在，toggle special workspace
-        hyprctl dispatch togglespecialworkspace "$NAME"
+        hyprctl dispatch "hl.dsp.workspace.toggle_special($(jq -Rn --arg n "$NAME" '$n'))"
       fi
     '';
   };

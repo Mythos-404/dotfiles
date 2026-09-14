@@ -1,76 +1,227 @@
-{
-  # 新语法: windowrule = <rule> <value>, match:<field> <pattern>
-
-  # ── Scratchpad 窗口规则 ─────────────────────────────
-  windowrule = [
+{lib, ...}: {
+  window_rule = [
+    # ── Scratchpad 窗口规则 ─────────────────────────────
     # 下拉终端
-    "float on, match:class ^(kitty-dropterm)$"
-    "workspace special:term silent, match:class ^(kitty-dropterm)$"
-    "size 75% 60%, match:class ^(kitty-dropterm)$"
-    "move 12.5% 5%, match:class ^(kitty-dropterm)$"
-    "animation slideIn, match:class ^(kitty-dropterm)$"
+    {
+      match.class = "^(kitty-dropterm)$";
+      float = true;
+    }
+    {
+      match.class = "^(kitty-dropterm)$";
+      workspace = "special:term silent";
+    }
+    {
+      match.class = "^(kitty-dropterm)$";
+      size = ["monitor_w * 0.75" "monitor_h * 0.60"];
+    }
+    {
+      match.class = "^(kitty-dropterm)$";
+      move = ["monitor_w * 0.125" "monitor_h * 0.05"];
+    }
+    {
+      match.class = "^(kitty-dropterm)$";
+      animation = "slideIn";
+    }
 
     # yazi 文件管理器
-    "float on, match:class ^(kitty-yazi)$"
-    "workspace special:yazi silent, match:class ^(kitty-yazi)$"
-    "size 75% 60%, match:class ^(kitty-yazi)$"
-    "move 12.5% 5%, match:class ^(kitty-yazi)$"
+    {
+      match.class = "^(kitty-yazi)$";
+      float = true;
+    }
+    {
+      match.class = "^(kitty-yazi)$";
+      workspace = "special:yazi silent";
+    }
+    {
+      match.class = "^(kitty-yazi)$";
+      size = ["monitor_w * 0.75" "monitor_h * 0.60"];
+    }
+    {
+      match.class = "^(kitty-yazi)$";
+      move = ["monitor_w * 0.125" "monitor_h * 0.05"];
+    }
 
     # btop 系统监控
-    "float on, match:class ^(kitty-btop)$"
-    "workspace special:btop silent, match:class ^(kitty-btop)$"
-    "size 75% 60%, match:class ^(kitty-btop)$"
-    "move 12.5% 5%, match:class ^(kitty-btop)$"
+    {
+      match.class = "^(kitty-btop)$";
+      float = true;
+    }
+    {
+      match.class = "^(kitty-btop)$";
+      workspace = "special:btop silent";
+    }
+    {
+      match.class = "^(kitty-btop)$";
+      size = ["monitor_w * 0.75" "monitor_h * 0.60"];
+    }
+    {
+      match.class = "^(kitty-btop)$";
+      move = ["monitor_w * 0.125" "monitor_h * 0.05"];
+    }
 
     # ── 通用浮动规则 ───────────────────────────────────
-    "float on, match:class ^(pavucontrol|org.pulseaudio.pavucontrol)$"
-    "size 800 600, match:class ^(pavucontrol|org.pulseaudio.pavucontrol)$"
-    "center on, match:class ^(pavucontrol|org.pulseaudio.pavucontrol)$"
+    {
+      match.class = "^(pavucontrol|org.pulseaudio.pavucontrol)$";
+      float = true;
+    }
+    {
+      match.class = "^(pavucontrol|org.pulseaudio.pavucontrol)$";
+      size = [800 600];
+    }
+    {
+      match.class = "^(pavucontrol|org.pulseaudio.pavucontrol)$";
+      center = true;
+    }
 
-    "float on, match:class ^([Rr]ofi)$"
-    "float on, match:class ^(xdg-desktop-portal-gtk)$"
-    "float on, match:class ^(org.gnome.Calculator)$"
-    "float on, match:class ^(nm-applet|nm-connection-editor|blueman-manager)$"
-    "float on, match:class ^(nwg-look|qt5ct|qt6ct)$"
-    "float on, match:class ^(file-roller|org.gnome.FileRoller)$"
-    "float on, match:class ^(gnome-system-monitor|org.gnome.SystemMonitor)$"
-    "float on, match:class ^(org.prismlauncher.PrismLauncher)$"
-    "float on, match:class ^(org.kde.polkit-kde-authentication-agent-1)$"
+    {
+      match.class = "^([Rr]ofi)$";
+      float = true;
+    }
+    {
+      match.class = "^(xdg-desktop-portal-gtk)$";
+      float = true;
+    }
+    {
+      match.class = "^(org.gnome.Calculator)$";
+      float = true;
+    }
+    {
+      match.class = "^(nm-applet|nm-connection-editor|blueman-manager)$";
+      float = true;
+    }
+    {
+      match.class = "^(nwg-look|qt5ct|qt6ct)$";
+      float = true;
+    }
+    {
+      match.class = "^(file-roller|org.gnome.FileRoller)$";
+      float = true;
+    }
+    {
+      match.class = "^(gnome-system-monitor|org.gnome.SystemMonitor)$";
+      float = true;
+    }
+    {
+      match.class = "^(org.prismlauncher.PrismLauncher)$";
+      float = true;
+    }
+    {
+      match.class = "^(org.kde.polkit-kde-authentication-agent-1)$";
+      float = true;
+    }
 
     # Thunar 弹窗
-    "float on, match:class ^([Tt]hunar)$, match:title (File Operation Progress)"
-    "float on, match:class ^([Tt]hunar)$, match:title (Confirm to replace files)"
+    {
+      match = {
+        class = "^([Tt]hunar)$";
+        title = "(File Operation Progress)";
+      };
+      float = true;
+    }
+    {
+      match = {
+        class = "^([Tt]hunar)$";
+        title = "(Confirm to replace files)";
+      };
+      float = true;
+    }
 
     # VSCode 弹窗
-    "float on, match:class ^(code|Code)$, match:title (Add Folder to Workspace)"
+    {
+      match = {
+        class = "^(code|Code)$";
+        title = "(Add Folder to Workspace)";
+      };
+      float = true;
+    }
 
     # Steam (非主窗口浮动)
-    ''float on, match:class ^([Ss]team)$, match:title ^((?![Ss]team).*|[Ss]team [Ss]ettings)$''
+    {
+      match = {
+        class = "^([Ss]team)$";
+        title = "^((?![Ss]team).*|[Ss]team [Ss]ettings)$";
+      };
+      float = true;
+    }
 
     # 通用弹窗
-    "float on, match:title ^(Open File)$"
-    "float on, match:title ^(Volume Control)$"
-    "float on, match:title ^(Picture-in-Picture)$"
-    "float on, match:title ^(Media viewer)$"
-    "float on, match:title ^(branchdialog)$"
+    {
+      match.title = "^(Open File)$";
+      float = true;
+    }
+    {
+      match.title = "^(Volume Control)$";
+      float = true;
+    }
+    {
+      match.title = "^(Picture-in-Picture)$";
+      float = true;
+    }
+    {
+      match.title = "^(Media viewer)$";
+      float = true;
+    }
+    {
+      match.title = "^(branchdialog)$";
+      float = true;
+    }
 
     # ── Picture-in-Picture ─────────────────────────────
-    "pin on, match:title ^(Picture-in-Picture)$"
-    "size 25% 25%, match:title ^(Picture-in-Picture)$"
-    "move 72% 7%, match:title ^(Picture-in-Picture)$"
-    "opacity 0.95 0.75, match:title ^(Picture-in-Picture)$"
+    {
+      match.title = "^(Picture-in-Picture)$";
+      pin = true;
+    }
+    {
+      match.title = "^(Picture-in-Picture)$";
+      size = ["monitor_w * 0.25" "monitor_h * 0.25"];
+    }
+    {
+      match.title = "^(Picture-in-Picture)$";
+      move = ["monitor_w * 0.72" "monitor_h * 0.07"];
+    }
+    {
+      match.title = "^(Picture-in-Picture)$";
+      opacity = "0.95 0.75";
+    }
 
     # ── 透明度 ─────────────────────────────────────────
-    "opacity 0.9 0.9, match:class ^([Ff]irefox|org.mozilla.firefox)$"
-    "opacity 0.9 0.8, match:class ^(kitty)$"
-    "opacity 0.9 0.8, match:class ^(code|Code)$"
-    "opacity 0.9 0.8, match:class ^([Tt]hunar)$"
-    "opacity 0.9 0.6, match:class ^(kitty-.*)$"
-    "opacity 0.9 0.6, match:class ^([Rr]ofi)$"
-    "opacity 0.8 0.8, match:class ^(neovide)$"
+    {
+      match.class = "^([Ff]irefox|org.mozilla.firefox)$";
+      opacity = "0.9 0.9";
+    }
+    {
+      match.class = "^(kitty)$";
+      opacity = "0.9 0.8";
+    }
+    {
+      match.class = "^(code|Code)$";
+      opacity = "0.9 0.8";
+    }
+    {
+      match.class = "^([Tt]hunar)$";
+      opacity = "0.9 0.8";
+    }
+    {
+      match.class = "^(kitty-.*)$";
+      opacity = "0.9 0.6";
+    }
+    {
+      match.class = "^([Rr]ofi)$";
+      opacity = "0.9 0.6";
+    }
+    {
+      match.class = "^(neovide)$";
+      opacity = "0.8 0.8";
+    }
 
     # ── Tearing (游戏) ─────────────────────────────────
-    "immediate on, match:class ^(cs2)$"
-    "immediate on, match:class ^(steam_app_.*)$"
+    {
+      match.class = "^(cs2)$";
+      immediate = true;
+    }
+    {
+      match.class = "^(steam_app_.*)$";
+      immediate = true;
+    }
   ];
 }
