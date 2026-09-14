@@ -130,6 +130,14 @@
           {
             home-manager.extraSpecialArgs = {
               inputs = mergedInputs;
+              pkgs-stable = import buildSystemConfig.nixpkgsStableInput {
+                system = architecture;
+                config.allowUnfree = true;
+              };
+              pkgs-unstable = import buildSystemConfig.nixpkgsUnstableInput {
+                system = architecture;
+                config.allowUnfree = true;
+              };
             };
           }
 
