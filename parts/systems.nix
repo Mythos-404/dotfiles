@@ -68,6 +68,11 @@
             if mergedInputs ? home-manager && mergedInputs.home-manager ? darwinModules
             then [mergedInputs.home-manager.darwinModules.home-manager]
             else []
+          )
+          ++ (
+            if mergedInputs ? agenix && mergedInputs.agenix ? darwinModules
+            then [mergedInputs.agenix.darwinModules.default]
+            else []
           );
       }
       else if extendedLib.arch.isLinux architecture
@@ -83,6 +88,11 @@
           ++ (
             if mergedInputs ? home-manager && mergedInputs.home-manager ? nixosModules
             then [mergedInputs.home-manager.nixosModules.home-manager]
+            else []
+          )
+          ++ (
+            if mergedInputs ? agenix && mergedInputs.agenix ? nixosModules
+            then [mergedInputs.agenix.nixosModules.default]
             else []
           );
       }
@@ -114,7 +124,7 @@
             nixpkgs.overlays = [
               packages.overlay
 
-              inputs.nix-cachyos-kernel.overlays.default
+              inputs.nix-cachyos-kernel.overlays.pinned
               inputs.nix4vscode.overlays.default
 
               inputs.yazi.overlays.default

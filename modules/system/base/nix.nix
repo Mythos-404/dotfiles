@@ -23,6 +23,9 @@
       "https://mythos-404.cachix.org"
 
       "https://yazi.cachix.org"
+
+      # CachyOS kernel binary cache
+      "https://attic.xuyh0120.win/lantian"
     ];
 
     trusted-public-keys = [
@@ -30,6 +33,8 @@
       "mythos-404.cachix.org-1:36HDeOT4aBoHWP/rtV2aY+m887BTKwKvygGBW9K13us="
 
       "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
+
+      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
     ];
     builders-use-substitutes = true;
   };

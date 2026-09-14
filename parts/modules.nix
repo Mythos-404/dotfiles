@@ -42,7 +42,8 @@ in {
             ++ (
               (userConfig.homeModules or [])
               |> map (module: homeModuleResolver architecture module)
-            );
+            )
+            ++ [inputs.agenix.homeManagerModules.default];
         };
         profileModules = map (profile: userDir + "/profiles/${profile}.nix") (userConfig.profiles or []);
 

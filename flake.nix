@@ -51,7 +51,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/444d135dde71c1de547cf7bfd73e67145e67aebb";
 
     yazi.url = "github:sxyazi/yazi";
 

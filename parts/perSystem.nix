@@ -57,6 +57,7 @@
         treefmt
         nil
         nixd
+        inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
 
       shellHook = ''
