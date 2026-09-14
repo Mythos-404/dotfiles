@@ -71,6 +71,7 @@
       imports = [
         ./parts/systems.nix
 
+        ./parts/home.nix
         ./parts/perSystem.nix
       ];
 

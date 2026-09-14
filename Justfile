@@ -79,6 +79,14 @@ rollback:
 rollback:
     @sudo darwin-rebuild rollback
 
+# 仅应用当前用户的 home-manager 配置 (无需 sudo)
+[group("system")]
+home *flargs="":
+    #!/usr/bin/env bash
+    user=$(whoami)
+    host=$(hostname -s)
+    nix run ".#home-manager" -- switch --flake ".#${user}@${host}" {{ flargs }} --show-trace
+
 ############################################################################
 #
 #  Nix 管理命令

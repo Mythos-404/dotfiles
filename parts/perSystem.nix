@@ -7,9 +7,12 @@
   perSystem = {
     lib,
     pkgs,
+    system,
     config,
     ...
   }: {
+    packages.home-manager = inputs.home-manager.packages.${system}.home-manager;
+
     pre-commit = {
       inherit pkgs;
       settings = {
