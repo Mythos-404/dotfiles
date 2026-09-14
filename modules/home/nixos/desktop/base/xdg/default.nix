@@ -24,15 +24,15 @@
       createDirectories = true;
       setSessionVariables = true;
 
-      desktop = "dkt";
-      documents = "doc";
-      download = "dls";
-      projects = "pjs";
-      music = "mus";
-      pictures = "pic";
-      publicShare = "psh";
-      templates = "tpl";
-      videos = "vid";
+      desktop = "${config.home.homeDirectory}/dkt";
+      documents = "${config.home.homeDirectory}/doc";
+      download = "${config.home.homeDirectory}/dls";
+      projects = "${config.home.homeDirectory}/pjs";
+      music = "${config.home.homeDirectory}/mus";
+      pictures = "${config.home.homeDirectory}/pic";
+      publicShare = "${config.home.homeDirectory}/psh";
+      templates = "${config.home.homeDirectory}/tpl";
+      videos = "${config.home.homeDirectory}/vid";
 
       extraConfig = {
         SCREENSHOTS = "${config.xdg.userDirs.pictures}/Screenshots";
