@@ -4,12 +4,12 @@
   #
   # 这是 Nix 里写 shell 脚本的最佳方式
   # runtimeInputs 里的包会自动加入脚本的 PATH
-  # 所以脚本里直接写 `swww img` 就行，不用写绝对路径
+  # 所以脚本里直接写 `awww img` 就行，不用写绝对路径
   # Nix 构建时还会自动跑 shellcheck 帮你检查语法
   # ══════════════════════════════════════════════════════════════
   wallpaper-random = pkgs.writeShellApplication {
     name = "wallpaper-random";
-    runtimeInputs = with pkgs; [swww findutils coreutils wallust coreutils-full];
+    runtimeInputs = with pkgs; [awww findutils coreutils wallust coreutils-full];
     text = ''
       WALLPAPER_DIR="''${1:-''${XDG_PICTURES_DIR:-$HOME/pic}/wallpapers}"
 
@@ -29,7 +29,7 @@
       fi
 
       echo "设置壁纸: $WALLPAPER"
-      swww img "$WALLPAPER" \
+      awww img "$WALLPAPER" \
         --transition-type grow \
         --transition-duration 1.5 \
         --transition-fps 60
@@ -43,19 +43,19 @@
   };
 in {
   home.packages = [
-    pkgs.swww
+    pkgs.awww
     pkgs.wallust
     wallpaper-random
   ];
 
-  systemd.user.services.swww = {
+  systemd.user.services.awww = {
     Unit = {
-      Description = "swww wallpaper daemon";
+      Description = "awww wallpaper daemon";
       PartOf = ["graphical-session.target"];
       After = ["graphical-session.target"];
     };
     Service = {
-      ExecStart = "${pkgs.swww}/bin/swww-daemon";
+      ExecStart = "${pkgs.awww}/bin/awww-daemon";
       Restart = "on-failure";
     };
     Install.WantedBy = ["graphical-session.target"];

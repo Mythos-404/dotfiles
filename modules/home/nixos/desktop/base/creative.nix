@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   # live streaming
   programs.obs-studio = {
-    enable = pkgs.stdenv.isx86_64;
+    enable = pkgs.stdenv.hostPlatform.isLinux;
     plugins = with pkgs.obs-studio-plugins; [
       # screen capture
       wlrobs

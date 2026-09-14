@@ -6,6 +6,7 @@
 
   catppuccin = {
     # The default `enable` value for all available programs.
+    autoEnable = true;
     enable = true;
     # one of "latte", "frappe", "macchiato", "mocha"
     flavor = "mocha";

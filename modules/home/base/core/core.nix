@@ -40,7 +40,11 @@
   };
 
   # A command-line fuzzy finder
-  programs.fzf.enable = true;
+  # Ctrl-R 由 Atuin 接管，禁用 fzf 的历史记录组件以避免冲突
+  programs.fzf = {
+    enable = true;
+    historyWidget.command = "";
+  };
 
   # very fast version of tldr in Rust
   programs.tealdeer = {
