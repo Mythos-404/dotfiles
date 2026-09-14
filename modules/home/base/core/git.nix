@@ -87,10 +87,11 @@
       os.editPreset = "nvim";
       git = {
         branchLogCmd = "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium --oneline {{branchName}} --";
-        paging = {
-          colorArg = "always";
-          pager = "delta --dark --paging=never";
-        };
+        diffRenderers = [
+          {
+            command = "delta --dark --pager=never --width=80 --file-style=never";
+          }
+        ];
         parseEmoji = true;
       };
       gui = {
