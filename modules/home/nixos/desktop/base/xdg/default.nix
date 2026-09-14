@@ -27,6 +27,7 @@
       desktop = "dkt";
       documents = "doc";
       download = "dls";
+      projects = "pjs";
       music = "mus";
       pictures = "pic";
       publicShare = "psh";
