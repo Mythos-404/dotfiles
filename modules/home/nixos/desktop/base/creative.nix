@@ -8,13 +8,13 @@
       droidcam-obs
       input-overlay
       obs-source-clone
-      obs-shaderfilter
+      # obs-shaderfilter
       obs-source-record
       obs-livesplit-one
       looking-glass-obs
       obs-vintage-filter
       obs-command-source
-      obs-move-transition
+      # obs-move-transition
       obs-backgroundremoval
 
       # advanced-scene-switcher
