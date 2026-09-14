@@ -40,6 +40,11 @@ in {
         src = zsh-powerlevel10k;
         file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       }
+      {
+        name = "fast-syntax-highlighting";
+        src = zsh-fast-syntax-highlighting;
+        file = "share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh";
+      }
     ];
 
     initContent = let
@@ -50,12 +55,11 @@ in {
       '';
       zshConfig = lib.mkOrder 1000 ''
         source ~/.p10k.zsh
-
         export PATH="$PATH:${localBin}:${goBin}:${rustBin}"
       '';
     in
       lib.mkMerge [zshConfigEarlyInit zshConfig];
   };
 
-  home.file.".p10k.zsh".source = ./.p10k.zsh;
+  home.file.".p10k.zsh".source = ./p10k.zsh;
 }
