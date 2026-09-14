@@ -6,7 +6,7 @@
   "nix.enableLanguageServer" = true;
   "nix.formatterPath" = "alejandra";
   "nix.serverSettings" = {
-    "nil" = {
+    "nixd" = {
       "formatting" = {
         "command" = ["alejandra"];
       };
